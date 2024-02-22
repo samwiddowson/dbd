@@ -1,0 +1,9 @@
+{
+    "tabWidth": 4,
+    "semi": false,
+    "trailingComma": "es5",
+    "experimentalTernaries": true,
+    "printWidth": 80,
+    "env": { "browser": true },
+    "plugins": ["prettier-plugin-tailwindcss"]
+}

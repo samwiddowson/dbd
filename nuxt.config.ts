@@ -1,8 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// @ts-ignore
 export default defineNuxtConfig({
-    modules: ['@nuxtjs/eslint-module'],
+    components: [
+        { path: "~/components/ui", extensions: ["vue"] },
+        { path: "~/components/layouts", extensions: ["vue"] },
+    ],
+    modules: ["@nuxtjs/eslint-module"],
     devtools: { enabled: true },
-    css: ['~/assets/css/main.css'],
+    css: ["~/assets/css/main.css"],
     postcss: {
         plugins: {
             tailwindcss: {},
