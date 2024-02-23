@@ -4,18 +4,20 @@ import { cn } from "../../utils/cn"
 
 <template>
     <li class="block w-full text-right sm:inline-block sm:w-32 sm:text-center">
-          <RouterLink
+        <NuxtLink
             :class="
                 cn(
-                    `rounded-lg border-black/0 px-2 py-1 text-base text-black
-                     hover:font-bold active:font-bold sm:text-xl`,
+                    `border-b-2 border-black/0 px-2 pt-1 text-base text-black
+                     transition-all duration-500 hover:font-bold
+                     active:font-bold sm:text-xl`
                     // { 'font-semibold': false },
                     // $attrs.class,
                 )
             "
             :to="$attrs.to"
+            active-class="border-b-2 border-black"
         >
             <slot></slot>
-        </RouterLink>
+        </NuxtLink>
     </li>
 </template>
