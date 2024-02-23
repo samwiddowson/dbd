@@ -2,7 +2,7 @@
     <div>
         <BaseH1>Double-Barrel Delivery</BaseH1>
         <div class="mt-96 space-y-8">
-              <p>
+            <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
                 accumsan dignissim neque, quis imperdiet ipsum dignissim a.
                 Proin purus velit, maximus quis aliquam at, tincidunt sit amet
@@ -17,7 +17,7 @@
                 lobortis mauris. In molestie feugiat turpis in tempor.
                 Pellentesque lobortis diam vitae dui luctus, a tempus diam
                 gravida. Ut vel neque eu ex laoreet commodo.
-              </p>
+            </p>
             <p>
                 Mauris eu cursus est. Donec suscipit metus tortor, at posuere
                 ipsum sollicitudin ac. Donec ac mauris augue. In viverra lorem
