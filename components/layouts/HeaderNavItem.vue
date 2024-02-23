@@ -10,8 +10,6 @@ import { cn } from "../../utils/cn"
                     `border-b-2 border-black/0 px-2 pt-1 text-base text-black
                      transition-all duration-500 hover:font-bold
                      active:font-bold sm:text-xl`
-                    // { 'font-semibold': false },
-                    // $attrs.class,
                 )
             "
             :to="$attrs.to"
