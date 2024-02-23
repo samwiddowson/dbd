@@ -8,7 +8,7 @@
             <div class="h-full w-full p-1">
                 <BaseCompartment class="h-full w-full overflow-y-scroll">
                     <slot></slot>
-                      </BaseCompartment>
+                </BaseCompartment>
             </div>
         </main>
     </div>

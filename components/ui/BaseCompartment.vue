@@ -7,7 +7,7 @@ import { cn } from "../../utils/cn"
         :class="
             cn(
                 'rounded border-2 border-amber-400 bg-black/50 p-2',
-                $attrs.class,
+                $attrs.class
             )
         "
     >
