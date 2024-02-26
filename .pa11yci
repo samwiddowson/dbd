@@ -1,0 +1,22 @@
+{
+    "defaults": {
+        "standard": "WCAG2AA",
+        "runners": [
+            "axe",
+            "htmlcs"
+        ],
+        "ignore": [
+            "color-contrast"
+        ],
+        "chromeLaunchConfig": {
+            "args": [
+                "--disable-dev-shm-usage",
+                "--no-sandbox",
+                "--disable-gpu"
+            ]
+        },
+        "reporters": [
+            "cli"
+        ]
+    }
+}

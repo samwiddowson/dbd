@@ -6,7 +6,7 @@ export default defineNuxtConfig({
         { path: "~/components/ui/forms", extensions: ["vue"] },
         { path: "~/components/layouts", extensions: ["vue"] },
     ],
-    modules: ["@nuxtjs/eslint-module"],
+    modules: ["@nuxtjs/eslint-module", "@nuxtjs/sitemap"],
     devtools: { enabled: true },
     css: ["~/assets/css/main.css"],
     postcss: {
@@ -14,5 +14,14 @@ export default defineNuxtConfig({
             tailwindcss: {},
             autoprefixer: {},
         },
+    },
+    app: {
+        head: {
+            htmlAttrs: { lang: "en" },
+            title: "DBD | Double-Barrel Delivery",
+        },
+    },
+    site: {
+        url: "http://localhost:10667",
     },
 })
