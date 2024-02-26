@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
-import BaseTextArea from "../../components/ui/forms/BaseTextArea.vue"
-import BaseInput from "../../components/ui/forms/BaseInput.vue"
+import BaseTextControl from "../../components/ui/forms/BaseTextControl.vue"
 
 const title = ref("")
 const description = ref("")
@@ -13,13 +12,24 @@ const file = ref("")
         <BaseH1>Resource Upload Page</BaseH1>
         <div class="bg-black/60">
             <div class="grid w-full sm:grid-cols-2">
-                <BaseInput v-model="title" name="title" label="Title" />
-                <BaseInput v-model="file" name="file" label="File" />
+                <BaseTextControl
+                    v-model="title"
+                    name="title"
+                    label="Title"
+                    text-control="input"
+                />
+                <BaseTextControl
+                    v-model="file"
+                    name="file"
+                    label="File"
+                    text-control="input"
+                />
             </div>
-            <BaseTextArea
+            <BaseTextControl
                 v-model="description"
                 name="description"
                 label="Description"
+                text-control="textarea"
             />
         </div>
         <p class="text-4xl text-white">{{ title }}</p>

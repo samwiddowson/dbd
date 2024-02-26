@@ -3,15 +3,20 @@ import { cn } from "../../../utils/cn"
 const { name, label } = defineProps<{
     name: string
     label: string
+    textControl: "input" | "textarea"
 }>()
 
 const model = defineModel<string>()
+
+const controlId = `${name}-control`
 </script>
 
 <template>
     <div class="h-fit w-full rounded-2xl bg-black/70 p-4">
-        <label :for="`${name}-input`" class="block">{{ label }}</label>
-        <input
+        <label :for="controlId" class="block">{{ label }}</label>
+        <component
+            :is="textControl"
+            :id="controlId"
             v-model="model"
             :class="
                 cn(
