@@ -1,12 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // @ts-ignore
 export default defineNuxtConfig({
-    components: [
-        { path: "~/components/ui", extensions: ["vue"] },
-        { path: "~/components/ui/forms", extensions: ["vue"] },
-        { path: "~/components/layouts", extensions: ["vue"] },
-    ],
-    modules: ["@nuxtjs/eslint-module", "@nuxtjs/sitemap"],
+    components: [{ path: "~/components/", pathPrefix: false }],
+    modules: ["@nuxtjs/eslint-module", "@nuxtjs/sitemap", "@nuxt/image"],
     devtools: { enabled: true },
     css: ["~/assets/css/main.css"],
     postcss: {
