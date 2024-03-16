@@ -25,3 +25,7 @@ logs
 
 # db file
 resources.db
+
+# locally-saved resource files
+public/images/**
+public/files/**

@@ -3,6 +3,7 @@
 export default defineNuxtConfig({
     components: [{ path: "~/components/", pathPrefix: false }],
     modules: ["@nuxtjs/eslint-module", "@nuxtjs/sitemap", "@nuxt/image"],
+    // plugins: ["~/plugins/db.server.js"],
     devtools: { enabled: true },
     css: ["~/assets/css/main.css"],
     postcss: {

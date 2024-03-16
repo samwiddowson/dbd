@@ -1,10 +1,10 @@
 import fs from "node:fs"
-import { v4 as uuid } from "uuid"
+// import { v4 as uuid } from "uuid"
 
 export async function saveFile(file: any) {
     console.log("file", file)
     const filenameExt = file.type.split("/").pop()
-    const fileName = `${uuid()}.${filenameExt}`
+    const fileName = `${"test"}.${filenameExt}`
 
     const filePath = `public/images/${fileName}`
 

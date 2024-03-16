@@ -3,6 +3,8 @@
 import sql from "better-sqlite3"
 const db = sql("resources.db")
 
+db.prepare(`DROP TABLE IF EXISTS resources`)
+
 db.prepare(
     `
 CREATE TABLE IF NOT EXISTS resources (

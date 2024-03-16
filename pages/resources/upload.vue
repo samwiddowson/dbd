@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useResourceUpload } from "~/composables/upload"
+import { useResourceUpload } from "~/composables/upload.ts"
+import BaseButton from "../../components/BaseButton.vue"
 
 const { fields, uploadResourceData } = useResourceUpload()
 
@@ -12,10 +13,11 @@ function submitData() {
         title: title.value,
         description: description.value,
         image: image.value,
-        dataFile: dataFile,
+        dataFile: dataFile.value,
     })
 }
 </script>
+
 <template>
     <div>
         <BaseH1>Resource Upload Page</BaseH1>
@@ -50,11 +52,9 @@ function submitData() {
                     control="textarea"
                 />
             </div>
-            <button>Yeah ok</button>
+            <div class="grid w-full items-center">
+                <BaseButton>Submit</BaseButton>
+            </div>
         </form>
-        <p class="text-4xl text-white">{{ title }}</p>
-        <p class="text-4xl text-white">{{ dataFile }}</p>
-        <p class="text-4xl text-white">{{ description }}</p>
     </div>
 </template>
-~/composables/upload

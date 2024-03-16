@@ -1,5 +1,5 @@
 import { saveFile } from "./repo/file-repo"
-import { ResourceInfo, saveResourceInfo } from "../db/database-api"
+import { saveResourceInfo } from "../db/database-api"
 
 export interface ResourceData {
     name: string
@@ -14,7 +14,7 @@ export async function saveResourceData({
     image,
     data,
 }: ResourceData) {
-    const resourceInfo: ResourceInfo = {
+    const resourceInfo: any = {
         name,
         description,
         image: "",
@@ -23,11 +23,13 @@ export async function saveResourceData({
 
     console.log(image)
     resourceInfo.image = await saveFile(image)
-    resourceInfo.dataFile = await saveFile(data)
+    // resourceInfo.dataFile = await saveFile(data)
 
     //     return saveFile(data)
     // })
     // .then((dataFilename) => {
     //     resourceInfo.dataFile = dataFilename
+
+    resourceInfo.dataFile = "dummy"
     saveResourceInfo(resourceInfo)
 }
