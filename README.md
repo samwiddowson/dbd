@@ -43,6 +43,8 @@ Built with Vue/Nuxt3, SQLLite database
 
 ### Getting a development version running
 
+In the project directory:
+
 ```bash
 #install package dependencies
 npm install

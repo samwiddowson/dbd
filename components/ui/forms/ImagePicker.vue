@@ -2,7 +2,7 @@
 import { ref } from "vue"
 import { cn } from "../../../utils/cn"
 const { modelValue, name } = defineProps<{
-    modelValue: MediaSource | null
+    modelValue: File | null
     name: string
 }>()
 const emit = defineEmits(["update:modelValue"])
@@ -16,8 +16,11 @@ function selectFile() {
 }
 
 function handleFileSelect(event: any) {
-    imageUrl.value = URL.createObjectURL(event.target.files[0])
-    emit("update:modelValue", event.target.files[0])
+    const [imageFile] = (event.target as HTMLInputElement).files as FileList
+
+    imageUrl.value = URL.createObjectURL(imageFile)
+    console.log(imageFile)
+    emit("update:modelValue", imageFile)
 }
 </script>
 

@@ -1,15 +1,25 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { useResourceUpload } from "~/composables/upload"
 
-const title = ref("")
-const description = ref("")
-const file = ref<any>("")
-const image = ref<MediaSource | null>(null)
+const { fields, uploadResourceData } = useResourceUpload()
+
+const { title, description, image, dataFile } = fields
+
+function submitData() {
+    console.log("called submitData")
+    if (!image.value) return
+    uploadResourceData({
+        title: title.value,
+        description: description.value,
+        image: image.value,
+        dataFile: dataFile,
+    })
+}
 </script>
 <template>
     <div>
         <BaseH1>Resource Upload Page</BaseH1>
-        <div class="bg-black/60">
+        <form class="bg-black/60" @submit.prevent="submitData">
             <div class="grid w-full sm:grid-cols-2">
                 <FormControl
                     v-model="title"
@@ -18,7 +28,7 @@ const image = ref<MediaSource | null>(null)
                     control="input"
                 />
                 <FormControl
-                    v-model="file"
+                    v-model="dataFile"
                     name="file"
                     label="File"
                     control="input"
@@ -40,9 +50,11 @@ const image = ref<MediaSource | null>(null)
                     control="textarea"
                 />
             </div>
-        </div>
+            <button>Yeah ok</button>
+        </form>
         <p class="text-4xl text-white">{{ title }}</p>
-        <p class="text-4xl text-white">{{ file }}</p>
+        <p class="text-4xl text-white">{{ dataFile }}</p>
         <p class="text-4xl text-white">{{ description }}</p>
     </div>
 </template>
+~/composables/upload
