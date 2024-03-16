@@ -9,7 +9,8 @@
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
         "lint": "eslint .",
-        "pa11y-ci:sitemap": "pa11y-ci --sitemap http://localhost:10667/sitemap.xml"
+        "pa11y-ci:sitemap": "pa11y-ci --sitemap http://localhost:10667/sitemap.xml",
+        "initdb": "node tasks/initdb.js"
     },
     "dependencies": {
         "better-sqlite3": "^9.4.3",

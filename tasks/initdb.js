@@ -1,4 +1,6 @@
-const sql = require("better-sqlite3")
+// const sql = require("better-sqlite3")
+
+import sql from "better-sqlite3"
 const db = sql("resources.db")
 
 db.prepare(
