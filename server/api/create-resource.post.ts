@@ -22,5 +22,5 @@ export default defineEventHandler(async (event) => {
 
     console.log("resourceData", resourceData)
 
-    // save(resourceData)
+    save(resourceData)
 })

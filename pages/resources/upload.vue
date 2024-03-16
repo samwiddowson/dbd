@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useResourceUpload } from "~/composables/upload"
+import { useResourceUpload } from "~/composables/upload.ts"
 
 const { fields, uploadResourceData } = useResourceUpload()
 
@@ -12,7 +12,7 @@ function submitData() {
         title: title.value,
         description: description.value,
         image: image.value,
-        dataFile: dataFile,
+        dataFile: dataFile.value,
     })
 }
 </script>

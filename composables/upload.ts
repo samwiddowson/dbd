@@ -8,16 +8,16 @@ async function uploadResourceData(resourceData: {
 }) {
     const formData = new FormData()
 
-    console.log(resourceData.image.name)
+    console.log(resourceData)
 
     formData.append("title", resourceData.title)
     formData.append("description", resourceData.description)
     formData.append("image", resourceData.image, resourceData.image.name)
-    formData.append(
-        "dataFile",
-        resourceData.dataFile,
-        resourceData.dataFile.name
-    )
+    // formData.append(
+    //     "dataFile",
+    //     resourceData.dataFile,
+    //     resourceData.dataFile.name
+    // )
 
     $fetch("/api/create-resource", {
         method: "POST",

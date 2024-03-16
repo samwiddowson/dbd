@@ -23,11 +23,13 @@ export async function saveResourceData({
 
     console.log(image)
     resourceInfo.image = await saveFile(image)
-    resourceInfo.dataFile = await saveFile(data)
+    // resourceInfo.dataFile = await saveFile(data)
 
     //     return saveFile(data)
     // })
     // .then((dataFilename) => {
     //     resourceInfo.dataFile = dataFilename
+
+    resourceInfo.dataFile = "dummy"
     saveResourceInfo(resourceInfo)
 }
