@@ -21,7 +21,7 @@ export async function saveResourceData({
         dataFile: "",
     }
 
-    console.log(image)
+    // console.log(image)
     resourceInfo.image = await saveFile(image)
     // resourceInfo.dataFile = await saveFile(data)
 
@@ -32,4 +32,8 @@ export async function saveResourceData({
 
     resourceInfo.dataFile = "dummy"
     saveResourceInfo(resourceInfo)
+}
+
+export async function getResources() {
+    return { test: "object" }
 }
