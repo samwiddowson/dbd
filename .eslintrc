@@ -1,4 +1,0 @@
-{
-    "plugins": ["nuxt"],
-    "extends": ["@nuxt", "plugin:prettier/recommended", "prettier"]
-}
