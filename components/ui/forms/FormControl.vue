@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { resolveComponent, InputTypeHTMLAttribute } from "vue"
+import { resolveComponent } from "vue"
 import { cn } from "../../../utils/cn"
 const { name, label, control, inputType } = defineProps<{
     name: string
