@@ -28,4 +28,5 @@ resources.db
 
 # locally-saved resource files
 public/images/**
+!public/images/image-folder.md
 public/files/**

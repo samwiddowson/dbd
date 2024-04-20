@@ -1,12 +1,13 @@
 import fs from "node:fs"
 // import { v4 as uuid } from "uuid"
 
-export async function saveFile(file: any) {
+export async function saveFile(file: any, resourceSlug: string) {
     console.log("file", file)
     const filenameExt = file.type.split("/").pop()
-    const fileName = `${"test"}.${filenameExt}`
+    const fileName = `${resourceSlug}.${filenameExt}`
 
-    const filePath = `public/images/${fileName}`
+    const urlPath = `/images/${fileName}`
+    const filePath = `public/${urlPath}`
 
     console.log("filePath = ", filePath)
 
@@ -22,5 +23,5 @@ export async function saveFile(file: any) {
         }
     })
 
-    return filePath
+    return urlPath
 }

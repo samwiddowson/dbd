@@ -1,5 +1,6 @@
+import { v4 as uuidv4 } from "uuid"
 import { saveFile } from "./repo/file-repo"
-import { saveResourceInfo } from "../db/database-api"
+import { getAllResources, saveResourceInfo } from "../db/database-api"
 
 export interface ResourceData {
     name: string
@@ -14,15 +15,17 @@ export async function saveResourceData({
     image,
     data,
 }: ResourceData) {
+    const resourceSlug = uuidv4()
     const resourceInfo: any = {
         name,
+        slug: resourceSlug,
         description,
         image: "",
         dataFile: "",
     }
 
     // console.log(image)
-    resourceInfo.image = await saveFile(image)
+    resourceInfo.image = await saveFile(image, resourceSlug)
     // resourceInfo.dataFile = await saveFile(data)
 
     //     return saveFile(data)
@@ -35,5 +38,5 @@ export async function saveResourceData({
 }
 
 export async function getResources() {
-    return { test: "object" }
+    return getAllResources()
 }

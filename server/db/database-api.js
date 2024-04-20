@@ -9,11 +9,8 @@ export function saveResourceInfo(info) {
 
     const data = {
         id: uuidv4(),
-        slug: uuidv4(),
         ...info,
     }
-
-    // console.log(db.prepare("SELECT * from resources").all())
 
     try {
         db.prepare(
@@ -31,4 +28,23 @@ export function saveResourceInfo(info) {
         )
     }
     console.log("COMPLETED INSERT")
+}
+
+export function getAllResources() {
+    try {
+        const data = db
+            .prepare(
+                `
+                SELECT *
+                FROM resources
+            `
+            )
+            .all()
+        return data
+    } catch (err) {
+        console.log(
+            "An error was encountered while trying to SELECT all resources from the database:",
+            err
+        )
+    }
 }
