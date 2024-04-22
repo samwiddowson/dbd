@@ -10,18 +10,22 @@ Built with Vue/Nuxt3, SQLLite database
     -   Build an Upload form
         -   title
         -   description
-        -   file picker
+        *   file picker
         -   image picker
-    -   index filename and metadata in database
-    -   save files locally
+    *   index filename and metadata in database
+    *   save files locally
     -   display file catalog
     -   allow download of files
-    -   accept images for files
+    *   accept images for files
     -   categorise resource types: texture packs; actors;
 -   diagnostic cleanup - check for discrepancies between db and file system
     -   Look for database entries which don't have corresponding files
     -   Look for files which don't have corresponding database entries
--   configure a "flyway" type tool for maintaining database changes
+-   configure a database migration tool for maintaining database changes
+-   pagination of resources
+-   track creators and resources
+-   versioning of resources
+-   generate slugs from creator, name and version
 -   bundling multiple resources in one pk3
     -   allow selection of multiple files for bundling
     -   create catalogue reference file to describe bundle
@@ -36,6 +40,7 @@ Built with Vue/Nuxt3, SQLLite database
 -   catalogue files in uploaded pk3 files
     -   new database tables to log file info
     -   dynamic random texture cycling for texture packs
+-   using remote db and file serving to allow deploy on vercel
 
 ## Building
 
@@ -50,7 +55,8 @@ In the project directory:
 npm install
 
 #run db setup script (TODO)
-#npm run db-setup
+npm run initdb
 
+#run development server and point your browser at the stated URL
 npm run dev
 ```
