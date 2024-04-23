@@ -15,9 +15,9 @@ export function saveResourceInfo(info) {
     try {
         db.prepare(
             `
-        INSERT INTO resources (id, slug, title, image, file)
+        INSERT INTO resources (id, slug, title, description, image, file)
         VALUES (
-            @id, @slug, @description, @image, @dataFile
+            @id, @slug, @name, @description, @image, @dataFile
             )
             `
         ).run(data)
