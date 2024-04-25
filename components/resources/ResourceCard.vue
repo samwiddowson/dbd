@@ -8,19 +8,25 @@ const { slug, name, imgUrl } = defineProps<{
 </script>
 
 <template>
-    <article
-        :class="cn('w-full rounded-lg border-2 border-lime-500 text-lime-500')"
-    >
-        <NuxtLink :to="`/resources/${slug}`">
-            <BaseH2 class="text-lime-500">{{ name }}</BaseH2>
-        </NuxtLink>
-        <NuxtImg
-            class="mx-auto"
-            :src="imgUrl"
-            fit="contain"
-            height="200"
-            width="360"
-        />
-        <p>{{ description }}</p>
-    </article>
+    <NuxtLink :to="`/resources/${slug}`">
+        <article
+            :class="
+                cn(
+                    'shadow-glow-sm w-full space-y-4 rounded-lg border-2',
+                    'mb-8 border-lime-200 px-4 pb-4 text-lime-200',
+                    'hover:shadow-glow-lg transition-all hover:scale-105 hover:bg-lime-200/5'
+                )
+            "
+        >
+            <BaseH2 class="text-lime-200">{{ name }}</BaseH2>
+            <NuxtImg
+                class="bg-black-80 rounded-lg border-2 border-amber-400 shadow-amber-400"
+                :src="imgUrl"
+                fit="contain"
+                width="500"
+                height="350"
+            />
+            <p>{{ description }}</p>
+        </article>
+    </NuxtLink>
 </template>
