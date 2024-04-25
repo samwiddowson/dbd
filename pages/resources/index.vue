@@ -7,15 +7,15 @@ const { data, pending, error, _refresh } = await useFetch("/api/resources", {
 <template>
     <main>
         <div>
-            <div class="mb-8 inline-block w-full sm:w-1/2">
-                <BaseH1 class="text-left text-lime-500">Resources Page</BaseH1>
+            <div class="mb-8 inline-block w-full sm:w-3/4">
+                <BaseH1 class="text-left text-lime-200">Resources Page</BaseH1>
             </div>
-            <div class="inline-block w-full text-right sm:w-1/2">
+            <div class="inline-block w-full text-right sm:w-1/4">
                 <NuxtLink to="/resources/upload">Upload</NuxtLink>
             </div>
         </div>
         <hr />
-        <div class="h-full bg-lime-500/10 px-4 pb-24 pt-8">
+        <div class="h-full bg-lime-200/10 px-4 pb-24 pt-8">
             <div v-if="pending">
                 <p>Loading...</p>
             </div>
