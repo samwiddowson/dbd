@@ -15,9 +15,17 @@ export function saveResourceInfo(info) {
     try {
         db.prepare(
             `
-        INSERT INTO resources (id, slug, title, description, image, file)
+        INSERT INTO resources (
+            id,
+            slug,
+            title,
+            description,
+            image,
+            file,
+            creator_id
+        )
         VALUES (
-            @id, @slug, @name, @description, @image, @dataFile
+            @id, @slug, @name, @description, @image, @dataFile, @creatorId
             )
             `
         ).run(data)
@@ -28,6 +36,8 @@ export function saveResourceInfo(info) {
         )
     }
     console.log("COMPLETED INSERT")
+
+    return data.id
 }
 
 export function getAllResources() {
@@ -35,8 +45,18 @@ export function getAllResources() {
         const data = db
             .prepare(
                 `
-                SELECT *
-                FROM resources
+                SELECT r.id resource_id
+                     , r.slug resource_slug
+                     , r.title resource_title
+                     , r.description resource_description
+                     , r.image resource_image
+                     , r.file resource_file
+                     , c.slug creator_slug
+                     , c.name creator_name
+                     , c.image creator_image
+                     , c.description creator_description
+                FROM resources r
+                     LEFT JOIN creators c ON c.id = r.creator_id
             `
             )
             .all()
@@ -44,6 +64,47 @@ export function getAllResources() {
     } catch (err) {
         console.log(
             "An error was encountered while trying to SELECT all resources from the database:",
+            err
+        )
+    }
+}
+
+export function saveCreatorInfo(info) {
+    const data = {
+        id: uuidv4(),
+        ...info,
+    }
+
+    try {
+        db.prepare(
+            `
+                INSERT INTO creators (id, slug, name, image, description)
+                VALUES (@id, @slug, @name, @image, @description)
+            `
+        ).run(data)
+    } catch (err) {
+        console.log(
+            "An error was encountered trying to INSERT creator info:",
+            data,
+            "Error was:",
+            err
+        )
+    }
+}
+
+export function getAllCreators() {
+    try {
+        const data = db
+            .prepare(
+                `
+                SELECT * FROM creators
+            `
+            )
+            .all()
+        return data
+    } catch (err) {
+        console.log(
+            "An error was encountered while trying to SELECT all creators from the database:",
             err
         )
     }

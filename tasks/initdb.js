@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS creators (
     id TEXT NOT NULL PRIMARY KEY,
     slug TEXT NOT NULL UNIQUE,
     name TEXT NOT NULL UNIQUE,
-    image TEXT NOT NULL,
+    image TEXT,
     description TEXT
 )
 `
