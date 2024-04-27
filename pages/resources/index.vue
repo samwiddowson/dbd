@@ -35,7 +35,7 @@ const { data, pending, error, _refresh } = await useFetch("/api/resources", {
             <div v-else>
                 <p>No resources to display!</p>
             </div>
-            <div class="hidden">{{ data }}{{ pending }}|{{ error }}</div>
+            <div class="">{{ data }}{{ pending }}|{{ error }}</div>
         </div>
     </main>
 </template>

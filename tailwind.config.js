@@ -9,7 +9,13 @@ module.exports = {
         "./error.vue",
     ],
     theme: {
-        extend: {},
+        extend: {
+            boxShadow: {
+                "glow-sm": "0 0 2.5px",
+                "glow-md": "0 0 5px",
+                "glow-lg": "0 0 10px",
+            },
+        },
     },
     plugins: [],
 }

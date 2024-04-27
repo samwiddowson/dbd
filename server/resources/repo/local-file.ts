@@ -19,7 +19,7 @@ export async function saveFile(file: any, resourceSlug: string) {
 
     stream.write(Buffer.from(buffer), (err) => {
         if (err) {
-            throw new Error("Saving image failed!")
+            throw new Error("Saving file failed!", err)
         }
     })
 
