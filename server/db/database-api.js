@@ -1,11 +1,12 @@
 import sql from "better-sqlite3"
+import log from "~/server/utils/log.js"
 import { v4 as uuidv4 } from "uuid"
 
 const db = sql("resources.db")
 
 export function saveResourceInfo(info) {
-    console.log("saveResourceInfo called with ResourceInfo:", info)
-    console.log("RUNNING INSERT")
+    log.trace("saveResourceInfo called with ResourceInfo:", info)
+    log.info("RUNNING INSERT")
 
     const data = {
         id: uuidv4(),
@@ -30,12 +31,12 @@ export function saveResourceInfo(info) {
             `
         ).run(data)
     } catch (err) {
-        console.log(
+        log.error(
             "An error was encountered while trying to INSERT into the database:",
             err
         )
     }
-    console.log("COMPLETED INSERT")
+    log.info("COMPLETED INSERT")
 
     return data.id
 }
@@ -62,7 +63,7 @@ export function getAllResources() {
             .all()
         return data
     } catch (err) {
-        console.log(
+        log.error(
             "An error was encountered while trying to SELECT all resources from the database:",
             err
         )
@@ -103,7 +104,7 @@ export function getAllCreators() {
             .all()
         return data
     } catch (err) {
-        console.log(
+        log.error(
             "An error was encountered while trying to SELECT all creators from the database:",
             err
         )
