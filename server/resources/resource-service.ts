@@ -8,6 +8,7 @@ export interface ResourceData {
     description: string
     imageFile: any
     dataFile?: any //TODO: remove optional modifier once implemented
+    creatorId: string
 }
 
 export async function saveResourceData({
@@ -26,6 +27,7 @@ export async function saveResourceData({
         description,
         imageFile: "",
         dataFile: "",
+        creatorId: "",
     }
 
     resourceInfo.imageFile = await saveFile(image, resourceSlug)
