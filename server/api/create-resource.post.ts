@@ -17,7 +17,8 @@ export default defineEventHandler(async (event) => {
     const resourceData: ResourceData = {
         name: extract("title")?.data?.toString("utf8")!,
         description: extract("description")?.data?.toString("utf8")!,
-        image: extract("image"),
+        imageFile: extract("image"),
+        slug: "",
     }
 
     console.log("resourceData", resourceData)

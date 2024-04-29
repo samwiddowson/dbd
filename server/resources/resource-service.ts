@@ -1,31 +1,34 @@
-import { v4 as uuidv4 } from "uuid"
 import { saveFile } from "./repo/file-repo"
 import { getAllResources, saveResourceInfo } from "../db/database-api"
+import { generateSlug } from "../utils/slugify"
 
 export interface ResourceData {
     name: string
+    slug: string
     description: string
-    image: any
-    data?: any //TODO: remove optional modifier once implemented
+    imageFile: any
+    dataFile?: any //TODO: remove optional modifier once implemented
 }
 
 export async function saveResourceData({
     name,
     description,
-    image,
+    imageFile: image,
     data,
 }: ResourceData) {
-    const resourceSlug = uuidv4()
-    const resourceInfo: any = {
+    const resourceSlug = generateSlug(name)
+
+    //TODO - ensure slug is unique
+
+    const resourceInfo: ResourceData = {
         name,
         slug: resourceSlug,
         description,
-        image: "",
+        imageFile: "",
         dataFile: "",
     }
 
-    // console.log(image)
-    resourceInfo.image = await saveFile(image, resourceSlug)
+    resourceInfo.imageFile = await saveFile(image, resourceSlug)
     // resourceInfo.dataFile = await saveFile(data)
 
     //     return saveFile(data)

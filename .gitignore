@@ -23,8 +23,8 @@ logs
 .env.*
 !.env.example
 
-# db file
-resources.db
+# db files
+resources.db*
 
 # locally-saved resource files
 public/images/**

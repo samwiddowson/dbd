@@ -26,7 +26,7 @@ export function saveResourceInfo(info) {
             creator_id
         )
         VALUES (
-            @id, @slug, @name, @description, @image, @dataFile, @creatorId
+            @id, @slug, @name, @description, @imageFile, @dataFile, @creatorId
             )
             `
         ).run(data)
@@ -52,7 +52,6 @@ export function getAllResources() {
                      , r.description resource_description
                      , r.image resource_image
                      , r.file resource_file
-                     , c.slug creator_slug
                      , c.name creator_name
                      , c.image creator_image
                      , c.description creator_description
@@ -79,18 +78,19 @@ export function saveCreatorInfo(info) {
     try {
         db.prepare(
             `
-                INSERT INTO creators (id, slug, name, image, description)
-                VALUES (@id, @slug, @name, @image, @description)
+                INSERT INTO creators (id, name, image, description)
+                VALUES (@id, @name, @image, @description)
             `
         ).run(data)
     } catch (err) {
-        console.log(
+        log.error(
             "An error was encountered trying to INSERT creator info:",
             data,
             "Error was:",
             err
         )
     }
+    return data.id
 }
 
 export function getAllCreators() {

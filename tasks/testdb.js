@@ -10,6 +10,7 @@ const creatorId = saveCreatorInfo(crea)
 
 const res = {
     name: "testName",
+    slug: "testSlug",
     description: "testDescription",
     image: "testImage",
     dataFile: "testDataFile",
