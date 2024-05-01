@@ -1,7 +1,7 @@
 import {
     ResourceData,
     saveResourceData as save,
-} from "../resources/resource-service"
+} from "~/server/services/resource-service"
 
 export default defineEventHandler(async (event) => {
     const formData: any = await readMultipartFormData(event)
