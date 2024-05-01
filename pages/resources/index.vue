@@ -19,10 +19,17 @@ const { data, pending, error, _refresh } = await useFetch("/api/resources", {
             <div v-if="pending">
                 <p>Loading...</p>
             </div>
-            <ul v-else-if="data?.length > 0" class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <ul
+                v-else-if="data?.length > 0"
+                class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
+            >
                 <li v-for="resource in data" :key="resource.id">
-                    <ResourceCard :name="resource.resource_title" :slug="resource.resource_slug"
-                        :img-url="resource.resource_image" :description="resource.resource_description" />
+                    <ResourceCard
+                        :name="resource.resource_title"
+                        :slug="resource.resource_slug"
+                        :img-url="resource.resource_image"
+                        :description="resource.resource_description"
+                    />
                 </li>
             </ul>
             <div v-else>

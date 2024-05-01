@@ -12,9 +12,9 @@ const { slug, name, imgUrl } = defineProps<{
         <article
             :class="
                 cn(
-                    'shadow-glow-sm w-full space-y-4 rounded-lg border-2',
+                    'w-full space-y-4 rounded-lg border-2 shadow-glow-sm',
                     'mb-8 border-lime-200 px-4 pb-4 text-lime-200',
-                    'hover:shadow-glow-lg transition-all hover:scale-105 hover:bg-lime-200/5'
+                    'transition-all hover:scale-105 hover:bg-lime-200/5 hover:shadow-glow-lg'
                 )
             "
         >
