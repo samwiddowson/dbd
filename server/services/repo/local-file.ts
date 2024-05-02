@@ -1,25 +1,69 @@
 import fs from "node:fs"
+
 import log from "~/server/utils/log.js"
 
-// import { v4 as uuid } from "uuid"
+import type {
+    FileStrategy,
+    FileStrategyConstructor,
+} from "./interfaces/FileStrategy"
 
-export async function saveFile(file: any, resourceSlug: string) {
-    log.trace("called local saveFile with file:", file)
-    const filenameExt = file.type.split("/").pop()
-    const fileName = `${resourceSlug}.${filenameExt}`
+// export async function saveFile(file: any, resourceSlug: string) {
+//     log.trace("called local saveFile with file:", file)
+//     const filenameExt = file.type.split("/").pop()
+//     const fileName = `${resourceSlug}.${filenameExt}`
+//
+//     const urlPath = `/images/${fileName}`
+//     const filePath = `public/${urlPath}`
+//
+//     const stream = fs.createWriteStream(filePath)
+//
+//     const buffer = file.data
+//
+//     stream.write(Buffer.from(buffer), (err) => {
+//         if (err) {
+//             throw new Error("Saving file failed!", err)
+//         }
+//     })
+//
+//     return urlPath
+// }
 
-    const urlPath = `/images/${fileName}`
-    const filePath = `public/${urlPath}`
+const LocalFileStrategy: FileStrategyConstructor = class LocalFileStrategy
+    implements FileStrategy
+{
+    directory: string
 
-    const stream = fs.createWriteStream(filePath)
+    constructor(directory: string) {
+        this.directory = directory
+        log.debug(
+            "New LocalFileStrategy instance created with directory:",
+            this.directory
+        )
+    }
+    testnum = 1
 
-    const buffer = file.data
+    async saveFile(file: any, resourceSlug: string) {
+        log.trace("called local saveFile with file:", file)
+        const filenameExt = file.type.split("/").pop()
+        const fileName = `${resourceSlug}.${filenameExt}`
 
-    stream.write(Buffer.from(buffer), (err) => {
-        if (err) {
-            throw new Error("Saving file failed!", err)
-        }
-    })
+        const urlPath = `${this.directory}/${fileName}`
+        const filePath = `public/${urlPath}`
 
-    return urlPath
+        log.debug("preparing to save file with path", filePath)
+        log.debug("testnum is ", this.testnum)
+        const stream = fs.createWriteStream(filePath)
+
+        const buffer = file.data
+
+        stream.write(Buffer.from(buffer), (err) => {
+            if (err) {
+                throw new Error("Saving file failed!", err)
+            }
+        })
+
+        return urlPath
+    }
 }
+
+export default LocalFileStrategy

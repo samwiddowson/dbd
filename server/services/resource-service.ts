@@ -1,6 +1,9 @@
-import { saveFile } from "./repo/file-repo"
 import { getAllResources, saveResourceInfo } from "../db/database-api"
 import { generateSlug } from "../utils/slugify"
+import { buildFileRepo } from "./builders/fileRepoBuilder"
+
+const fileRepo = buildFileRepo("files")
+const imageRepo = buildFileRepo("images")
 
 export interface ResourceData {
     name: string
@@ -30,7 +33,7 @@ export async function saveResourceData({
         creatorId: "",
     }
 
-    resourceInfo.imageFile = await saveFile(image, resourceSlug)
+    resourceInfo.imageFile = await imageRepo.saveFile(image, resourceSlug)
     // resourceInfo.dataFile = await saveFile(data)
 
     //     return saveFile(data)

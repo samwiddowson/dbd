@@ -1,5 +1,13 @@
-import { saveFile as saveFileStrategy } from "./local-file"
+import type { FileStrategy } from "./interfaces/FileStrategy"
 
-export async function saveFile(file: File, resourceSlug: string) {
-    return saveFileStrategy(file, resourceSlug)
+export default class FileRepo {
+    fileStrategy: FileStrategy
+
+    constructor(fileStrategy: FileStrategy) {
+        this.fileStrategy = fileStrategy
+    }
+    testnum = 2
+    saveFile(file: any, resourceSlug: string) {
+        return this.fileStrategy.saveFile(file, resourceSlug)
+    }
 }
