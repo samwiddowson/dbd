@@ -17,13 +17,12 @@ export interface ResourceData {
 export async function saveResourceData({
     name,
     description,
-    imageFile: image,
-    data,
+    imageFile,
+    dataFile,
 }: ResourceData) {
     const resourceSlug = generateSlug(name)
 
     //TODO - ensure slug is unique
-
     const resourceInfo: ResourceData = {
         name,
         slug: resourceSlug,
@@ -33,13 +32,8 @@ export async function saveResourceData({
         creatorId: "",
     }
 
-    resourceInfo.imageFile = await imageRepo.saveFile(image, resourceSlug)
-    // resourceInfo.dataFile = await saveFile(data)
-
-    //     return saveFile(data)
-    // })
-    // .then((dataFilename) => {
-    //     resourceInfo.dataFile = dataFilename
+    resourceInfo.imageFile = await imageRepo.saveFile(imageFile, resourceSlug)
+    resourceInfo.dataFile = await fileRepo.saveFile(dataFile, resourceSlug)
 
     resourceInfo.dataFile = "dummy"
     saveResourceInfo(resourceInfo)
