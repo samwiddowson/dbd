@@ -2,7 +2,12 @@
 // @ts-expect-error linter cannot find defineNuxtConfig
 export default defineNuxtConfig({
     components: [{ path: "~/components/", pathPrefix: false }],
-    modules: ["@nuxt/eslint", "@nuxtjs/sitemap", "@nuxt/image"],
+    modules: [
+        "@nuxt/eslint",
+        "@nuxtjs/sitemap",
+        "@nuxt/image",
+        "@nuxt/test-utils/module",
+    ],
     eslint: {},
     // plugins: ["~/plugins/db.server.js"],
     devtools: { enabled: true },

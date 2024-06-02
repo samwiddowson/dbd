@@ -1,5 +1,5 @@
 import FileRepo from "../repo/file-repo"
-import LocalFileStrategy from "../repo/local-file"
+import LocalFileStrategy from "../repo/LocalFileStrategy"
 
 export function buildFileRepo(directory: string) {
     //TODO: when adding support for a cloud-based solution, select and build
