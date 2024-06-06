@@ -1,7 +1,7 @@
 import sql from "better-sqlite3"
 import type ParsedMap from "./model/ParsedMap"
 
-export default class ResourceWranger {
+export default class ResourceComparator {
     db: sql.Database
 
     constructor() {
@@ -15,5 +15,7 @@ export default class ResourceWranger {
         this.db.prepare("CREATE TABLE @name (doomednum)").run({
             name: `${map.name}_things`,
         })
+
+        //TODO: insert map data info into table
     }
 }

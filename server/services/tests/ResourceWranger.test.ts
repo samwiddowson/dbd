@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest"
-import ResourceWrangler from "../ResourceWrangler"
+import ResourceComparator from "../ResourceComparator"
 import ParsedMap from "../model/ParsedMap"
 
 const mocks = vi.hoisted(() => {
@@ -26,7 +26,7 @@ vi.mock("better-sqlite3", () => {
 
 describe("constructor", () => {
     it("makes expected sqllite3 call", () => {
-        new ResourceWrangler()
+        new ResourceComparator()
         expect(mocks.db.default).toHaveBeenCalledOnce()
         expect(mocks.db.default.mock.calls[0]).toEqual([":memory:"])
     })
@@ -35,7 +35,7 @@ describe("constructor", () => {
 describe("addMap", () => {
     it("creates expected tables", () => {
         const TEST_MAP_NAME = "TESTMAP_01"
-        const r = new ResourceWrangler()
+        const r = new ResourceComparator()
         const testMap = new ParsedMap(TEST_MAP_NAME)
 
         r.addMap(testMap)
