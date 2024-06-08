@@ -1,5 +1,5 @@
 import sql from "better-sqlite3"
-import type ParsedMap from "./model/ParsedMap"
+import type ParsedMap from "~/server/services/model/ParsedMap"
 
 export default class ResourceComparator {
     db: sql.Database

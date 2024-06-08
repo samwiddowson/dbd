@@ -1,4 +1,4 @@
-import type ParsedMap from "../../model/ParsedMap"
+import type ParsedMap from "~/server/services/model/ParsedMap"
 
 export default interface MapParserStrategy {
     format: string

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, expectTypeOf } from "vitest"
-import MapParser from "../parsers/MapParser"
+import MapParser from "~/server/services/parsers/map/MapParser"
 
 describe("MapParser", () => {
     it("Implements a UdmfMapParser strategy when given a string[] array", () => {

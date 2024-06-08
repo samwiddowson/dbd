@@ -1,12 +1,11 @@
 import ParsedMap from "~/server/services/model/ParsedMap"
-import type MapParserStrategy from "../../interfaces/MapParserStrategy"
-import type { UdmfMapData } from "./interfaces/MapData"
+import type MapParserStrategy from "~/server/services/parsers/map/strategies/interfaces/MapParserStrategy"
 
 export class UdmfMapParser implements MapParserStrategy {
     format = "UDMF"
-    mapData: UdmfMapData
+    mapData: string[]
 
-    constructor(mapData: UdmfMapData) {
+    constructor(mapData: string[]) {
         this.mapData = mapData
     }
 

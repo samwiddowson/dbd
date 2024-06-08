@@ -1,4 +1,4 @@
-import ResourceComparator from "../ResourceComparator"
+import ResourceComparator from "~/server/services/comparator/ResourceComparator"
 
 export function wrangleResources() {
     const resourceComparator = new ResourceComparator()

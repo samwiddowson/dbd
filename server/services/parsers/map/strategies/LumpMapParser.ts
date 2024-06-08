@@ -1,5 +1,5 @@
 import ParsedMap from "~/server/services/model/ParsedMap"
-import type MapParserStrategy from "../../interfaces/MapParserStrategy"
+import type MapParserStrategy from "~/server/services/parsers/map/strategies/interfaces/MapParserStrategy"
 
 export class LumpMapParser implements MapParserStrategy {
     format = "Lump"

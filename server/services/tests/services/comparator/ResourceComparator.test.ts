@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest"
-import ResourceComparator from "../ResourceComparator"
-import ParsedMap from "../model/ParsedMap"
+import ParsedMap from "~/server/services/model/ParsedMap"
+import ResourceComparator from "~/server/services/comparator/ResourceComparator"
 
 const mocks = vi.hoisted(() => {
     const run = vi.fn()

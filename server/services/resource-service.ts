@@ -1,5 +1,5 @@
 import { getAllResources, saveResourceInfo } from "../db/database-api"
-import { generateSlug } from "../utils/slugify"
+import { generateSlug } from "~/server/utils/slugify"
 import { buildFileRepo } from "./builders/fileRepoBuilder"
 
 const fileRepo = buildFileRepo("files")

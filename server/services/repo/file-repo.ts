@@ -1,4 +1,4 @@
-import type { FileStrategy } from "./interfaces/FileStrategy"
+import type { FileStrategy } from "~/server/services/repo/interfaces/FileStrategy"
 
 export default class FileRepo {
     fileStrategy: FileStrategy
