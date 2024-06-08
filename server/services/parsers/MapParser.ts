@@ -1,17 +1,31 @@
-import ParsedMap from "../model/ParsedMap"
+import type ParsedMap from "../model/ParsedMap"
 import type MapParserStrategy from "./interfaces/MapParserStrategy"
+import { LumpMapParser } from "./map/strategies/LumpMapParser"
+import { UdmfMapParser } from "./map/strategies/UdmfMapParser"
+import type {
+    LumpMapData,
+    UdmfMapData,
+} from "./map/strategies/interfaces/MapData"
+
+function determineStrategy(mapData: Buffer | string[]) {
+    if (mapData instanceof Buffer) {
+        return new LumpMapParser(mapData)
+    } else if (Array.isArray(mapData)) {
+        //TODO: check everything in the array is a string
+        return new UdmfMapParser(mapData)
+    }
+    throw new Error("TODO: message")
+}
 
 export default class MapParser {
-    mapData: any
+    mapData: UdmfMapData | LumpMapData
     strategy: MapParserStrategy
+    parseMap: () => ParsedMap
 
-    constructor(mapData: any) {
+    constructor(mapData: Buffer | string[]) {
         this.mapData = mapData
-        //TODO: decide on which map parsing strategy is required and assign the local strategy here
-        this.strategy = {
-            parseMap() {
-                return new ParsedMap()
-            },
-        }
+        this.strategy = determineStrategy(mapData)
+
+        this.parseMap = this.strategy.parseMap
     }
 }
