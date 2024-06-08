@@ -3,14 +3,14 @@ import MapParser from "~/server/services/parsers/map/MapParser"
 
 describe("MapParser", () => {
     it("Implements a UdmfMapParser strategy when given a string[] array", () => {
-        const mapData = ["test1", "test2"]
+        const mapData = { name: "MAP99", data: ["test1", "test2"] }
         const mapParser = new MapParser(mapData)
 
         expect(mapParser.strategy.format).toBe("UDMF")
     })
 
     it("Implements a LumpMapParser strategy when given a Buffer", () => {
-        const mapData = Buffer.from("test string")
+        const mapData = { name: "MAP99", data: Buffer.from("test string") }
         const mapParser = new MapParser(mapData)
 
         expect(mapParser.strategy.format).toBe("Lump")

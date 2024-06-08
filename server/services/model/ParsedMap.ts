@@ -1,7 +1,16 @@
+import type { MapFormat } from "../parsers/map/strategies/interfaces/MapData"
+
+export interface SummaryCount {
+    [key: string]: number
+}
+
 export default class ParsedMap {
     name: string
-    constructor(name: string) {
+    format: MapFormat
+    textureCounts: SummaryCount = {}
+    constructor(name: string, format: MapFormat) {
         this.name = name
+        this.format = format
     }
     getMapDataAsString() {
         return "NOT IMPLEMENTED"
