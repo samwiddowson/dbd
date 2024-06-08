@@ -10,10 +10,9 @@ import type {
 function determineStrategy(mapData: Buffer | string[]) {
     if (mapData instanceof Buffer) {
         return new LumpMapParser(mapData)
-    } else if (Array.isArray(mapData)) {
+    } else {
         return new UdmfMapParser(mapData)
     }
-    throw new Error("TODO: message")
 }
 
 export default class MapParser {
