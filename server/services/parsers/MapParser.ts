@@ -11,7 +11,6 @@ function determineStrategy(mapData: Buffer | string[]) {
     if (mapData instanceof Buffer) {
         return new LumpMapParser(mapData)
     } else if (Array.isArray(mapData)) {
-        //TODO: check everything in the array is a string
         return new UdmfMapParser(mapData)
     }
     throw new Error("TODO: message")
