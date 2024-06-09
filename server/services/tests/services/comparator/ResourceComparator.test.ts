@@ -30,6 +30,12 @@ describe("constructor", () => {
     it("creates in-memory sqllite3 databse when called", () => {
         const r = new ResourceComparator()
         expect(r.db.memory).toBe(true)
+        expect(r.db.prepare(`SELECT * FROM texture_counts`).all().length).toBe(
+            0
+        )
+        expect(
+            r.db.prepare(`SELECT * FROM doomednum_counts`).all().length
+        ).toBe(0)
         // expect(mocks.db.default).toHaveBeenCalledOnce()
         // expect(mocks.db.default.mock.calls[0]).toEqual([":memory:"])
     })
@@ -49,13 +55,14 @@ describe("addMap", () => {
                 .prepare(
                     `
                      SELECT *
-                       FROM TESTMAP_01_textures
+                       FROM texture_counts
                       WHERE texture_name = @textureName`
                 )
                 .get({
                     textureName: textureName,
-                }) as { texture_name: string; count: number }
+                }) as { texture_name: string; map_name: string; count: number }
             expect(dbRow.texture_name).toBe(textureName)
+            expect(dbRow.map_name).toBe(TEST_MAP_NAME)
             expect(dbRow.count).toBe(testMap.textureCounts[textureName])
         }
 
