@@ -35,4 +35,19 @@ describe("WadParser", () => {
         expect(wadParser.directory[9].name).toBe("REJECT")
         expect(wadParser.directory[10].name).toBe("BLOCKMAP")
     })
+    it("udmf map reads header and directory from the buffer", async () => {
+        const fileData = await readFile(testUdmfFilePath)
+        const wadParser = new WadParser(fileData)
+
+        wadParser.parse()
+        expect(wadParser.header).not.toBe(undefined)
+        expect(wadParser.header!.identification).toBe("PWAD")
+        expect(wadParser.header!.numlumps).toBe(4)
+
+        expect(wadParser.directory.length).toBe(wadParser.header!.numlumps)
+        expect(wadParser.directory[0].name).toBe("MAP01")
+        expect(wadParser.directory[1].name).toBe("TEXTMAP")
+        expect(wadParser.directory[2].name).toBe("ZNODES")
+        expect(wadParser.directory[3].name).toBe("ENDMAP")
+    })
 })
