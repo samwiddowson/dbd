@@ -3,7 +3,8 @@ import { readFile } from "node:fs/promises"
 import { expect, it, describe } from "vitest"
 import WadParser from "~/server/services/parsers/wad/WadParser"
 
-const testFilePath = path.join(__dirname, "testdata", "lumpmap.wad")
+const testLumpFilePath = path.join(__dirname, "testdata", "lumpmap.wad")
+const testUdmfFilePath = path.join(__dirname, "testdata", "udmfmap.wad")
 // console.log(testFilePath)
 
 describe("WadParser", () => {
@@ -13,8 +14,8 @@ describe("WadParser", () => {
         expect(wadParser.rawData.toString()).toBe("aaaaa")
     })
 
-    it("reads header and directory from the buffer", async () => {
-        const fileData = await readFile(testFilePath)
+    it("lump map reads header and directory from the buffer", async () => {
+        const fileData = await readFile(testLumpFilePath)
         const wadParser = new WadParser(fileData)
 
         wadParser.parse()

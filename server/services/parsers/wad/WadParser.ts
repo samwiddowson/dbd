@@ -49,5 +49,12 @@ export default class WadParser {
             this.header.infotableofs,
             this.header.numlumps
         )
+        // TODO:
+        // * Read and parse MAPINFO lump if exist (to get list of map lump names)
+        // * refer to dictionary
+        // * for every MAPxx or ExMy marker,
+        //   * if next lump is THINGS grab that, SIDEDEFS and SECTORS and add to a MapLumps object
+        //   * otherwise find the next ENDMAP marker and get the TEXTMAP between those; read this as a string
+        //   * create a MapData object and append it to a MapData[] array
     }
 }
