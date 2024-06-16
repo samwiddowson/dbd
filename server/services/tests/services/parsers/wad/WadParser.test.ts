@@ -57,5 +57,14 @@ describe("WadParser", () => {
         expect(wadParser.directory[1].name).toBe("TEXTMAP")
         expect(wadParser.directory[2].name).toBe("ZNODES")
         expect(wadParser.directory[3].name).toBe("ENDMAP")
+
+        const mapData = wadParser.getMapData()
+        expect(mapData.length).toBe(1)
+        const m = mapData.pop()
+
+        expect(m!.name).toBe("MAP01")
+
+        const d = m!.data as string
+        expect(d.length).toBe(wadParser.directory[1].size)
     })
 })

@@ -83,7 +83,6 @@ export default class WadParser {
                         this.directory[i].filepos,
                         this.directory[i].size
                     )
-                    log.debug("size of thingsLump is", thingsLump.byteLength)
 
                     i += 2 //should be SIDEDEFS
                     if (this.directory[i].name !== "SIDEDEFS") {
@@ -125,7 +124,25 @@ export default class WadParser {
                             sectorsLump
                         ),
                     })
-                } //else find the TEXTMAP
+                } else {
+                    //find the TEXTMAP
+                    while (this.directory[i].name != "ENDMAP") {
+                        if (this.directory[i].name === "TEXTMAP") {
+                            const endAddress =
+                                this.directory[i].filepos +
+                                this.directory[i].size
+                            m.push({
+                                name: mapName,
+                                data: this.rawData.toString(
+                                    "ascii",
+                                    this.directory[i].filepos,
+                                    endAddress
+                                ),
+                            })
+                        }
+                        i++
+                    }
+                }
             }
         }
         return m
