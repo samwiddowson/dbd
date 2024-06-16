@@ -246,4 +246,4 @@ export default `
     textureceiling = "CEIL1_1";
     lightlevel = 192;
     }
-`.replace(/\s/g, "") // strip whitespace (this will happen when extracting real data)
+`

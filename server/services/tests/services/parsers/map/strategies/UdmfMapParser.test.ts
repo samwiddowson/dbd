@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest"
 import { UdmfMapParser } from "~/server/services/parsers/map/strategies/UdmfMapParser"
-import textMap from "./example-resources/text-map"
+import textMap from "./testdata/text-map"
 
 const dummyMapData = { name: "MAP99", data: "test map data" }
 

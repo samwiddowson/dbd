@@ -23,9 +23,11 @@ export class UdmfMapParser implements MapParserStrategy {
 
         //No point in verifying the full structure of the map data
         //We only need to find very specfic patterns
-        const textureReferences = textmapData.match(
-            /[;{]texture((middle)|(top)|(bottom)|(floor)|(ceiling))=".{1,8}"/gi
-        )
+        const textureReferences = textmapData
+            .replace(/\s/g, "")
+            .match(
+                /[;{]texture((middle)|(top)|(bottom)|(floor)|(ceiling))=".{1,8}"/gi
+            )
         if (textureReferences) {
             for (const texDeclaration of textureReferences) {
                 //do something
