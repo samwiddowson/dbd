@@ -19,10 +19,11 @@ export class UdmfMapParser implements MapParserStrategy {
         if (this.mapData.data instanceof Buffer) {
             throw new Error("Unexpected map data type")
         }
+        const textmapData = this.mapData.data as string
 
         //No point in verifying the full structure of the map data
         //We only need to find very specfic patterns
-        const textureReferences = this.mapData.data.match(
+        const textureReferences = textmapData.match(
             /[;{]texture((middle)|(top)|(bottom)|(floor)|(ceiling))=".{1,8}"/gi
         )
         if (textureReferences) {

@@ -1,4 +1,8 @@
-const config = useRuntimeConfig()
+// TODO: This doesn't work with vitest; need an alternative or help it work with vitest
+// const config = useRuntimeConfig()
+const config = {
+    loggingLevel: "TRACE",
+}
 //const outputFile = "node-complete.log"
 
 //useful to configure for file outputs instead (can trace be co-opted for this somehow?)

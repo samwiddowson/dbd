@@ -9,19 +9,24 @@ Built with Vue/Nuxt3, SQLLite database
 -   Accept submitted files, save them and serve them
     -   Build an Upload form
         -   title
-        -   description
-        *   file picker
-        -   image picker
+        *   description
+        -   file picker
+        *   image picker
     *   index filename and metadata in database
     *   save files locally
-    -   display file catalog
+    *   display file catalog
     -   allow download of files
     *   accept images for files
     -   categorise resource types: texture packs; actors;
+
+*   Parse maps for textures
+    -   UDMF
+    *   Lump
+    -   Compare map textures to catalogued textures to build a list of requirements
+
 -   diagnostic cleanup - check for discrepancies between db and file system
     -   Look for database entries which don't have corresponding files
     -   Look for files which don't have corresponding database entries
--   configure a database migration tool for maintaining database changes
 -   pagination of resources
 -   track creators and resources
 -   versioning of resources
