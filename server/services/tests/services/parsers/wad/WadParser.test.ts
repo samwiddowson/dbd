@@ -29,7 +29,6 @@ describe("WadParser", () => {
         expect(wadParser.directory[8].name).toBe("SECTORS")
         expect(wadParser.directory[9].name).toBe("REJECT")
         expect(wadParser.directory[10].name).toBe("BLOCKMAP")
-        console.log(wadParser.directory)
 
         const mapData = wadParser.getMapData()
         expect(mapData.length).toBe(1)
