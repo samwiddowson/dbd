@@ -69,7 +69,7 @@ export class LumpMapParser implements MapParserStrategy {
             mapLumps.sidedefs,
             mapLumps.sectors
         )
-        parsedMap.doomedCounts = getThingCounts(mapLumps.things)
+        parsedMap.doomednumCounts = getThingCounts(mapLumps.things)
         return parsedMap
     }
 }

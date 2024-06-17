@@ -29,7 +29,7 @@ describe("LumpMapParser", () => {
             CEIL1_1: 1,
             CEIL1_2: 1,
         })
-        expect(mapData.doomedCounts).toEqual({
+        expect(mapData.doomednumCounts).toEqual({
             "1": 1,
             "2001": 1,
             "13": 1,

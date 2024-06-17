@@ -7,7 +7,7 @@ export interface SummaryCount {
 export default class ParsedMap {
     name: string
     format: MapFormat
-    doomedCounts: SummaryCount = {}
+    doomednumCounts: SummaryCount = {}
     textureCounts: SummaryCount = {}
     constructor(name: string, format: MapFormat) {
         this.name = name
