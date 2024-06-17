@@ -1,6 +1,7 @@
 import log from "~/server/utils/log"
 import type MapData from "../map/strategies/interfaces/MapData"
 import { MapLumps } from "../map/strategies/interfaces/MapData"
+import readWadLumpText from "./readWadLumpText"
 
 interface Header {
     identification: string
@@ -23,9 +24,7 @@ function readDirectory(rawData: Buffer, dirOffset: number, numlumps: number) {
         const entry: DirectoryEntry = {
             filepos: rawData.readIntLE(filePosOffset, 4),
             size: rawData.readIntLE(sizeOffset, 4),
-            name: rawData
-                .toString("ascii", nameOffset, nameOffset + 8)
-                .replace(/(\x00)+/i, ""),
+            name: readWadLumpText(rawData, nameOffset),
         }
         d.push(entry)
     }
