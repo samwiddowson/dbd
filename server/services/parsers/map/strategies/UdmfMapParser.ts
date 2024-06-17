@@ -39,7 +39,24 @@ export class UdmfMapParser implements MapParserStrategy {
             }
         }
 
+        const doomednumCounts: SummaryCount = {}
+
+        const thingReferences = textmapData
+            .replace(/\s/g, "")
+            .match(/thing\/\/[0-9]+{[^{]*type=[0-9]+[^}]*}/gi)
+        if (thingReferences) {
+            for (const thingDeclaration of thingReferences) {
+                //do something
+                const doomednum = thingDeclaration.match(
+                    /type=(?<doomednum>[0-9]+)/
+                )!.groups!.doomednum
+                doomednumCounts[doomednum] =
+                    (doomednumCounts[doomednum] || 0) + 1
+            }
+        }
+
         parsedMap.textureCounts = textureCounts
+        parsedMap.doomednumCounts = doomednumCounts
         return parsedMap
     }
 }

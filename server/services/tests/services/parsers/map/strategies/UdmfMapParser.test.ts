@@ -26,5 +26,11 @@ describe("UdmfMapParser", () => {
             FLOOR0_1: 3,
             CEIL1_1: 3,
         })
+        expect(parsedMapData.doomednumCounts).toEqual({
+            "1": 1,
+            "2003": 1,
+            "2019": 1,
+            "65": 2,
+        })
     })
 })
