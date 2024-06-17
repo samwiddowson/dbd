@@ -34,14 +34,7 @@ export async function saveResourceData({
     }
 
     resourceInfo.imageFile = await imageRepo.saveFile(image, resourceSlug)
-    // resourceInfo.dataFile = await saveFile(data)
-
-    //     return saveFile(data)
-    // })
-    // .then((dataFilename) => {
-    //     resourceInfo.dataFile = dataFilename
-
-    resourceInfo.dataFile = "dummy"
+    resourceInfo.dataFile = await fileRepo.saveFile(data, resourceSlug)
     saveResourceInfo(resourceInfo)
 }
 
