@@ -21,6 +21,9 @@ export function wrangleResources(wadData: Buffer, resourceIndex: string[]) {
         resourceComparator.addMap(map)
     }
 
+    //TODO: also look for resources included in the provided WAD
+    //  and add them to ResourceComparator (with "included" flag?)
+
     //TODO: get used resource pack data from main db using resource index
     //TODO: store resource pack data in ResourceComparator
     //TODO: ask resoucecomparator which resources are actually used -- get a list of what is actually required
