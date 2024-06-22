@@ -6,31 +6,29 @@ Built with Vue/Nuxt3, SQLLite database
 
 ## Road map
 
+CURRENT FOCUS: write tests for resource-wranger-service, including e2e testing
+NEXT PLANNED FOCUS: index resource wads for texture data
+
+### Resource catalogue site
+
 -   Accept submitted files, save them and serve them
     -   Build an Upload form
         -   title
-        *   description
+        -   description
         -   file picker
-        *   image picker
-    *   index filename and metadata in database
-    *   save files locally
-    *   display file catalog
+        -   image picker
+    -   index filename and metadata in database
+    -   save files locally
+    -   display file catalog
     -   allow download of files
-    *   accept images for files
+    -   accept images for files
     -   categorise resource types: texture packs; actors;
-
-*   Parse maps for textures
-    -   UDMF
-    *   Lump
-    -   Compare map textures to catalogued textures to build a list of requirements
-
--   diagnostic cleanup - check for discrepancies between db and file system
-    -   Look for database entries which don't have corresponding files
-    -   Look for files which don't have corresponding database entries
 -   pagination of resources
 -   track creators and resources
 -   versioning of resources
 -   generate slugs from creator, name and version
+-   visual flourish
+    -   dynamic random texture cycling for texture packs
 -   bundling multiple resources in one pk3
     -   allow selection of multiple files for bundling
     -   create catalogue reference file to describe bundle
@@ -42,10 +40,57 @@ Built with Vue/Nuxt3, SQLLite database
             -   Option to Build mapinfo file with doomednums for actors
         -   figure out how to avoid file clashes
     -   allow download of created zip file
--   catalogue files in uploaded pk3 files
-    -   new database tables to log file info
-    -   dynamic random texture cycling for texture packs
 -   using remote db and file serving to allow deploy on vercel
+
+### Map-specific resource management
+
+-   Parse WADs for map information
+    -   UDMF ✅
+    -   Lump ✅
+-   Parse maps for resource information ✅
+    -   UDMF ✅
+        -   textures ✅
+        -   things ✅
+    -   Lump ✅
+        -   textures ✅
+        -   things ✅
+-   Parse uploaded resource files
+    -   wad
+        -   textures
+            -   from TEXTURES lump
+            -   patch info
+                -   inc. buffer offsets/addresses of patches
+            -   ANIMDEFS
+                -   to find and group related textures in an anim-group
+                -   in a WAD this relates to physical order
+        -   things
+            -   TODO: specifics
+        -   TODO: list/consider other resources
+    -   pk3
+        -   textures
+            -   TODO: specifics
+        -   things
+            -   TODO: specifics
+        -   TODO: list/consider other resources
+    -   store indexed information in database
+-   Compare map textures to catalogued textures to build a list of requirements
+    -   store parsed map resource usage in memory-db ✅
+    -   store indexed resource info in memory-db
+    -   compare map resource usage with resource index info
+
+### Building releasable packages
+
+-   wrt "bundling multiple resources" item above
+-   pk3
+    -   TODO: specifics
+-   wad
+    -   TODO: specifics
+
+### Maintenance
+
+-   diagnostic cleanup - check for discrepancies between db and file system
+    -   Look for database entries which don't have corresponding files
+    -   Look for files which don't have corresponding database entries
 
 ## Building
 
