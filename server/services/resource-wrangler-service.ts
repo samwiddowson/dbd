@@ -1,11 +1,26 @@
 import ResourceComparator from "~/server/services/comparator/ResourceComparator"
+import WadParser from "./parsers/wad/WadParser"
+import type ParsedMap from "./model/ParsedMap"
+import MapParser from "./parsers/map/MapParser"
 
-export function wrangleResources() {
+export function wrangleResources(wadData: Buffer, resourceIndex: string[]) {
     const resourceComparator = new ResourceComparator()
 
-    //TODO: read WAD and get raw map data
-    //TODO: parse raw map data and get map resource info
-    //TODO: store map resource info in ResourceComparator
+    const wadParser = new WadParser(wadData)
+
+    const mapData = wadParser.getMapData()
+
+    const parsedMaps: ParsedMap[] = []
+
+    for (const map of mapData) {
+        const mapParser = new MapParser(map)
+        parsedMaps.push(mapParser.parseMap())
+    }
+
+    for (const map of parsedMaps) {
+        resourceComparator.addMap(map)
+    }
+
     //TODO: get used resource pack data from main db using resource index
     //TODO: store resource pack data in ResourceComparator
     //TODO: ask resoucecomparator which resources are actually used -- get a list of what is actually required
