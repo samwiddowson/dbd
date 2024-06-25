@@ -1,4 +1,4 @@
-import { wrangleResources } from "../services/resource-wrangler-service"
+import { wrangleResources } from "../services/resource-packager-service"
 
 export default defineEventHandler(async (event) => {
     const formData = await readMultipartFormData(event)
