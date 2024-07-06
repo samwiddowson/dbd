@@ -1,4 +1,4 @@
-import { wrangleResources } from "../services/resource-packager-service"
+import ReleasePackager from "../services/ReleasePackager"
 
 export default defineEventHandler(async (event) => {
     const formData = await readMultipartFormData(event)
@@ -12,5 +12,9 @@ export default defineEventHandler(async (event) => {
         extract("resourceIndex")?.data.toString("utf8").split(",") ?? []
 
     //TODO: check for empty fields and throw error
-    wrangleResources(wadFile, resourceIndex)
+    const releasePackager = new ReleasePackager(wadFile, resourceIndex)
+
+    const packagedRelease = releasePackager.buildReleasePackage()
+
+    return packagedRelease
 })
