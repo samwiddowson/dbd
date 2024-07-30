@@ -28,7 +28,7 @@ export default class WadParser {
         }
     }
 
-    *#directoryEntryReader() {
+    *#rawDirectoryReader() {
         const entryOffset = this.header!.infotableofs
         for (let i = 0; i < this.header!.numlumps; i++) {
             const filePosOffset = entryOffset + i * 16
@@ -44,14 +44,128 @@ export default class WadParser {
         }
     }
 
+    *#lumpDirectory() {
+        for (let i = 0; i < this.directory!.length; i++) {
+            yield this.directory[i]
+        }
+    }
+
     constructor(rawData: Buffer) {
         this.rawData = rawData
         this.header = this.#readHeader()
-        const directoryEntries = this.#directoryEntryReader()
+        const directoryEntries = this.#rawDirectoryReader()
         let entry = directoryEntries.next()
         while (!entry.done) {
             this.directory.push(entry.value)
             entry = directoryEntries.next()
+        }
+    }
+
+    #getLumpData(lumpInfo: DirectoryEntry) {
+        const lumpData = Buffer.from(
+            this.rawData.buffer,
+            lumpInfo.filepos,
+            lumpInfo.size
+        )
+        //TODO: check lump data is of expected length and throw error if not
+        return lumpData
+    }
+
+    #getMapData(
+        mapLumpInfo: DirectoryEntry,
+        lumpDirectoryIterator: Generator<DirectoryEntry>
+    ) {
+        //found a map
+        const mapName = mapLumpInfo.name
+
+        const firstResult = lumpDirectoryIterator.next()
+        if (firstResult.done) {
+            throw new Error(
+                `No further map lumps found after map marker for ${mapName}`
+            )
+        }
+
+        if (firstResult.value.name === "THINGS") {
+            //the map info is stored in the legacy style
+            const thingsEntry = firstResult.value
+
+            log.debug(
+                "processing things lump from directory info:",
+                thingsEntry
+            )
+
+            const thingsLump = this.#getLumpData(thingsEntry)
+
+            lumpDirectoryIterator.next() // LINEDEFS
+
+            const sidedefsResult = lumpDirectoryIterator.next()
+            if (sidedefsResult.done) {
+                throw new Error(
+                    "No further map lumps found when looking for SIDEDEFS lump"
+                )
+            }
+            const sidedefsEntry = sidedefsResult.value
+            if (sidedefsEntry.name !== "SIDEDEFS") {
+                throw new Error(
+                    `Unexpected lump name in WAD directory: ${sidedefsEntry.name}`
+                )
+            }
+            log.debug(
+                "processing sidedefs lump from directory info:",
+                sidedefsEntry
+            )
+            const sidedefsLump = this.#getLumpData(sidedefsEntry)
+
+            lumpDirectoryIterator.next() // VERTEXES
+            lumpDirectoryIterator.next() // SEGS
+            lumpDirectoryIterator.next() // SSECTORS
+            lumpDirectoryIterator.next() // NODES
+            const sectorsResult = lumpDirectoryIterator.next()
+            if (sectorsResult.done) {
+                throw new Error(
+                    "No further map lumps found when looking for SECTORS lump"
+                )
+            }
+            const sectorsEntry = sectorsResult.value
+            if (sectorsEntry.name !== "SECTORS") {
+                throw new Error(
+                    `Unexpected lump name in WAD directory: ${sectorsEntry.name}`
+                )
+            }
+            log.debug(
+                "processing sectors lump from directory info:",
+                sectorsEntry
+            )
+            const sectorsLump = this.#getLumpData(sectorsEntry)
+            return {
+                name: mapName,
+                data: new MapLumps(thingsLump, sidedefsLump, sectorsLump),
+            }
+        } else {
+            //find the TEXTMAP
+            //
+
+            const nextLump = firstResult.value
+            while (nextLump.name != "ENDMAP") {
+                if (nextLump.name === "TEXTMAP") {
+                    const textmap = nextLump
+                    const endAddress = textmap.filepos + textmap.size
+                    return {
+                        name: mapName,
+                        data: this.rawData.toString(
+                            "ascii",
+                            textmap.filepos,
+                            endAddress
+                        ),
+                    }
+                }
+                const nextResult = lumpDirectoryIterator.next()
+                if (nextResult.done) {
+                    throw new Error(
+                        `Unexpected ENDMAP when searching for TEXTMAP in ${mapName}`
+                    )
+                }
+            }
         }
     }
 
@@ -66,89 +180,27 @@ export default class WadParser {
         //   * create a MapData object and append it to a MapData[] array
         //
         const m: MapData[] = []
-        for (let i = 0; i < this.directory.length; i++) {
+        const lumpDirectoryIterator = this.#lumpDirectory()
+        let iteratorResult = lumpDirectoryIterator.next()
+        while (!iteratorResult.done) {
+            const lump = iteratorResult.value
+            log.debug("iterated lump", lump.name)
+
             if (
-                this.directory[i].name.match(/MAP[0-9]{2}/) ||
-                this.directory[i].name.match(/E[0-9]M[0-9]}/)
+                lump.name.match(/MAP[0-9]{2}/) ||
+                lump.name.match(/E[0-9]M[0-9]}/)
             ) {
-                //found a map
-                const mapName = this.directory[i].name
-
-                i++
-
-                if (this.directory[i].name === "THINGS") {
-                    log.debug(
-                        "processing things lump from directory info:",
-                        this.directory[i]
+                const mapData = this.#getMapData(lump, lumpDirectoryIterator)
+                if (!mapData) {
+                    throw new Error(
+                        `unexpected empty mapdata for map ${lump.name}`
                     )
-                    //this is a lump map
-                    const thingsLump = Buffer.from(
-                        this.rawData.buffer,
-                        this.directory[i].filepos,
-                        this.directory[i].size
-                    )
-
-                    i += 2 //should be SIDEDEFS
-                    if (this.directory[i].name !== "SIDEDEFS") {
-                        throw new Error(
-                            `Unexpected lump name in WAD directory: ${this.directory[i].name}`
-                        )
-                    }
-                    log.debug(
-                        "processing sidedefs lump from directory info:",
-                        this.directory[i]
-                    )
-                    const sidedefsLump = Buffer.from(
-                        this.rawData.buffer,
-                        this.directory[i].filepos,
-                        this.directory[i].size
-                    )
-
-                    i += 5 //should be SECTORS
-                    if (this.directory[i].name !== "SECTORS") {
-                        throw new Error(
-                            `Unexpected lump name in WAD directory: ${this.directory[i].name}`
-                        )
-                    }
-                    log.debug(
-                        "processing sectors lump from directory info:",
-                        this.directory[i]
-                    )
-                    const sectorsLump = Buffer.from(
-                        this.rawData.buffer,
-                        this.directory[i].filepos,
-                        this.directory[i].size
-                    )
-
-                    m.push({
-                        name: mapName,
-                        data: new MapLumps(
-                            thingsLump,
-                            sidedefsLump,
-                            sectorsLump
-                        ),
-                    })
-                } else {
-                    //find the TEXTMAP
-                    while (this.directory[i].name != "ENDMAP") {
-                        if (this.directory[i].name === "TEXTMAP") {
-                            const endAddress =
-                                this.directory[i].filepos +
-                                this.directory[i].size
-                            m.push({
-                                name: mapName,
-                                data: this.rawData.toString(
-                                    "ascii",
-                                    this.directory[i].filepos,
-                                    endAddress
-                                ),
-                            })
-                        }
-                        i++
-                    }
                 }
+                m.push(mapData)
             }
+            iteratorResult = lumpDirectoryIterator.next()
         }
+
         return m
     }
 }
