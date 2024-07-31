@@ -4,12 +4,9 @@ import { expect, it, describe } from "vitest"
 import WadParser from "~/server/services/parsers/wad/WadParser"
 import { MapLumps } from "~/server/services/parsers/map/strategies/interfaces/MapData"
 
-const testLumpFilePath = path.join(__dirname, "testdata", "lumpmap.wad")
-const testUdmfFilePath = path.join(__dirname, "testdata", "udmfmap.wad")
-// console.log(testFilePath)
-
-describe("WadParser", () => {
-    it("lump map reads header and directory from the buffer", async () => {
+describe("WadParser - lump map", () => {
+    const testLumpFilePath = path.join(__dirname, "testdata", "lumpmap.wad")
+    it("reads header and directory from the buffer", async () => {
         const fileData = await readFile(testLumpFilePath)
         const wadParser = new WadParser(fileData)
 
@@ -43,7 +40,12 @@ describe("WadParser", () => {
         expect(d.sectors.length).toBe(wadParser.directory[8].size)
     })
 
-    it("udmf map reads header and directory from the buffer", async () => {
+    //TODO -- error handling
+})
+
+describe("WadParser - udmf map", () => {
+    const testUdmfFilePath = path.join(__dirname, "testdata", "udmfmap.wad")
+    it("reads header and directory from the buffer", async () => {
         const fileData = await readFile(testUdmfFilePath)
         const wadParser = new WadParser(fileData)
 
@@ -65,5 +67,34 @@ describe("WadParser", () => {
 
         const d = m!.data as string
         expect(d.length).toBe(wadParser.directory[1].size)
+    })
+    //TODO -- error handling
+})
+
+describe("WadParser - resource data", () => {
+    const testResourceFilePath = path.join(
+        __dirname,
+        "testdata",
+        "textures.wad"
+    )
+    it("reads resource data", async () => {
+        const fileData = await readFile(testResourceFilePath)
+        const wadParser = new WadParser(fileData)
+
+        expect(wadParser.header).not.toBe(undefined)
+        expect(wadParser.header!.identification).toBe("PWAD")
+        expect(wadParser.header!.numlumps).toBe(6)
+
+        expect(wadParser.directory.length).toBe(wadParser.header!.numlumps)
+        expect(wadParser.directory[0].name).toBe("P_START")
+        expect(wadParser.directory[1].name).toBe("DFPLN05")
+        expect(wadParser.directory[2].name).toBe("OTECHB01")
+        expect(wadParser.directory[3].name).toBe("P_END")
+        expect(wadParser.directory[4].name).toBe("PNAMES")
+        expect(wadParser.directory[5].name).toBe("TEXTURE1")
+
+        const resourceData = wadParser.getResourceData()
+        expect(resourceData.patches?.length).toBe(wadParser.directory[4].size)
+        expect(resourceData.textures?.length).toBe(wadParser.directory[5].size)
     })
 })

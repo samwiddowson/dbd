@@ -2,6 +2,7 @@ import log from "~/server/utils/log"
 import type MapData from "../map/strategies/interfaces/MapData"
 import { MapLumps } from "../map/strategies/interfaces/MapData"
 import readWadLumpText from "./readWadLumpText"
+import type WadTextureData from "./interfaces/WadTextureData"
 
 interface Header {
     identification: string
@@ -184,7 +185,6 @@ export default class WadParser {
         let iteratorResult = lumpDirectoryIterator.next()
         while (!iteratorResult.done) {
             const lump = iteratorResult.value
-            log.debug("iterated lump", lump.name)
 
             if (
                 lump.name.match(/MAP[0-9]{2}/) ||
@@ -202,5 +202,42 @@ export default class WadParser {
         }
 
         return m
+    }
+
+    getResourceData() {
+        const lumpDirectoryIterator = this.#lumpDirectory()
+        let texture1Lump: Buffer | undefined
+        let texture2Lump: Buffer | undefined
+        let patchesLump: Buffer | undefined
+        let iteratorResult = lumpDirectoryIterator.next()
+        while (!iteratorResult.done) {
+            const lump = iteratorResult.value
+            log.debug("iterated lump", lump.name)
+
+            if (lump.name === "TEXTURE1") {
+                if (texture1Lump) {
+                    throw new Error("Multiple lumps found with name TEXTURE1")
+                }
+                texture1Lump = this.#getLumpData(lump)
+            } else if (lump.name === "TEXTURE2") {
+                if (texture2Lump) {
+                    throw new Error("Multiple lumps found with name TEXTURE2")
+                }
+                texture2Lump = this.#getLumpData(lump)
+            } else if (lump.name === "PNAMES") {
+                patchesLump = this.#getLumpData(lump)
+            }
+            iteratorResult = lumpDirectoryIterator.next()
+        }
+
+        const texturesLump = Buffer.concat([
+            texture1Lump ?? new Uint8Array(),
+            texture2Lump ?? new Uint8Array(),
+        ])
+
+        return {
+            textures: texturesLump,
+            patches: patchesLump,
+        }
     }
 }
