@@ -1,13 +1,13 @@
 import path from "node:path"
 import { readFile } from "node:fs/promises"
 import { describe, it, expect } from "vitest"
-import { LumpMapParser } from "~/server/services/parsers/map/strategies/LumpMapParser"
+import { BinaryMapParser } from "~/server/services/parsers/map/strategies/BinaryMapParser"
 
 function getLumpFile(lumpName: string) {
     return path.join(__dirname, "testdata", `${lumpName}.lmp`)
 }
 
-describe("LumpMapParser", () => {
+describe("BinaryMapParser", () => {
     it("correctly parses map", async () => {
         const testMapData = {
             name: "MAP02",
@@ -17,7 +17,7 @@ describe("LumpMapParser", () => {
                 sectors: await readFile(getLumpFile("SECTORS")),
             },
         }
-        const parser = new LumpMapParser(testMapData)
+        const parser = new BinaryMapParser(testMapData)
 
         const mapData = parser.parseMap()
 
