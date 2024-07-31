@@ -55,7 +55,7 @@ function getThingCounts(thingsLump: Buffer) {
     return things
 }
 
-export class LumpMapParser implements MapParserStrategy {
+export class BinaryMapParser implements MapParserStrategy {
     format: MapFormat = "Lump"
     mapData: MapData
     constructor(mapData: MapData) {

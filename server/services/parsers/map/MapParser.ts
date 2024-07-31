@@ -2,12 +2,12 @@ import type MapData from "./strategies/interfaces/MapData"
 import { MapLumps } from "./strategies/interfaces/MapData"
 
 import type ParsedMap from "~/server/services/model/ParsedMap"
-import { LumpMapParser } from "~/server/services/parsers/map/strategies/LumpMapParser"
+import { BinaryMapParser } from "~/server/services/parsers/map/strategies/BinaryMapParser"
 import { UdmfMapParser } from "~/server/services/parsers/map/strategies/UdmfMapParser"
 
 function determineStrategy(mapData: MapData) {
     if (mapData.data instanceof MapLumps) {
-        return new LumpMapParser(mapData)
+        return new BinaryMapParser(mapData)
     } else {
         return new UdmfMapParser(mapData)
     }
@@ -15,7 +15,7 @@ function determineStrategy(mapData: MapData) {
 
 export default class MapParser {
     mapData: MapData
-    strategy: LumpMapParser | UdmfMapParser
+    strategy: BinaryMapParser | UdmfMapParser
     parseMap: () => ParsedMap
 
     constructor(mapData: MapData) {
