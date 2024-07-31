@@ -230,13 +230,13 @@ export default class WadParser {
             iteratorResult = lumpDirectoryIterator.next()
         }
 
-        const texturesLump = Buffer.concat([
+        const texturexLump = Buffer.concat([
             texture1Lump ?? new Uint8Array(),
             texture2Lump ?? new Uint8Array(),
         ])
 
         return {
-            textures: texturesLump,
+            texturex: texturexLump,
             patches: patchesLump,
         }
     }

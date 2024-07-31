@@ -95,6 +95,6 @@ describe("WadParser - resource data", () => {
 
         const resourceData = wadParser.getResourceData()
         expect(resourceData.patches?.length).toBe(wadParser.directory[4].size)
-        expect(resourceData.textures?.length).toBe(wadParser.directory[5].size)
+        expect(resourceData.texturex?.length).toBe(wadParser.directory[5].size)
     })
 })
