@@ -2,7 +2,6 @@ import log from "~/server/utils/log"
 import type MapData from "../map/strategies/interfaces/MapData"
 import { MapLumps } from "../map/strategies/interfaces/MapData"
 import readWadLumpText from "./readWadLumpText"
-import type WadTextureData from "./interfaces/WadTextureData"
 
 interface Header {
     identification: string
@@ -16,7 +15,7 @@ interface DirectoryEntry {
     name: string
 }
 
-export default class WadParser {
+export default class WadReader {
     rawData: Buffer
     header: Header | undefined
     directory: DirectoryEntry[] = []

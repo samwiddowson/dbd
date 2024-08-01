@@ -1,15 +1,15 @@
 import ResourceComparator from "~/server/services/comparator/ResourceComparator"
-import WadParser from "./parsers/wad/WadParser"
+import WadReader from "./parsers/wad/WadReader"
 import type ParsedMap from "./model/ParsedMap"
 import MapParser from "./parsers/map/MapParser"
 
 export default class ReleasePackager {
     resourceComparator: ResourceComparator
-    wadParser: WadParser
+    wadParser: WadReader
 
     constructor(wadData: Buffer, resourceIndex: string[]) {
         this.resourceComparator = new ResourceComparator()
-        this.wadParser = new WadParser(wadData)
+        this.wadParser = new WadReader(wadData)
     }
 
     #indexResourceUsage() {
