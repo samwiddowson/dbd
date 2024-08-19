@@ -4,15 +4,15 @@ import { expect, it, describe } from "vitest"
 import WadReader from "~/server/services/parsers/wad/WadReader"
 import { MapLumps } from "~/server/services/parsers/map/strategies/interfaces/MapData"
 
-describe("WadParser - lump map", () => {
+describe("WadReader - lump map", () => {
     const testLumpFilePath = path.join(__dirname, "testdata", "lumpmap.wad")
     it("reads header and directory from the buffer", async () => {
         const fileData = await readFile(testLumpFilePath)
         const wadReader = new WadReader(fileData)
 
         expect(wadReader.header).not.toBe(undefined)
-        expect(wadReader.header!.identification).toBe("PWAD")
-        expect(wadReader.header!.numlumps).toBe(11)
+        expect(wadReader.header?.identification).toBe("PWAD")
+        expect(wadReader.header?.numlumps).toBe(11)
 
         expect(wadReader.directory.length).toBe(wadReader.header!.numlumps)
         expect(wadReader.directory[0].name).toBe("MAP01")
@@ -33,8 +33,8 @@ describe("WadParser - lump map", () => {
 
         expect(m!.name).toBe("MAP01")
 
-        const d = m!.data as MapLumps
-        expect(m!.data).toBeInstanceOf(MapLumps)
+        const d = m?.data as MapLumps
+        expect(m?.data).toBeInstanceOf(MapLumps)
         expect(d.things.length).toBe(wadReader.directory[1].size)
         expect(d.sidedefs.length).toBe(wadReader.directory[3].size)
         expect(d.sectors.length).toBe(wadReader.directory[8].size)
@@ -43,15 +43,15 @@ describe("WadParser - lump map", () => {
     //TODO -- error handling
 })
 
-describe("WadParser - udmf map", () => {
+describe("WadReader - udmf map", () => {
     const testUdmfFilePath = path.join(__dirname, "testdata", "udmfmap.wad")
     it("reads header and directory from the buffer", async () => {
         const fileData = await readFile(testUdmfFilePath)
         const wadReader = new WadReader(fileData)
 
         expect(wadReader.header).not.toBe(undefined)
-        expect(wadReader.header!.identification).toBe("PWAD")
-        expect(wadReader.header!.numlumps).toBe(4)
+        expect(wadReader.header?.identification).toBe("PWAD")
+        expect(wadReader.header?.numlumps).toBe(4)
 
         expect(wadReader.directory.length).toBe(wadReader.header!.numlumps)
         expect(wadReader.directory[0].name).toBe("MAP01")
@@ -71,7 +71,7 @@ describe("WadParser - udmf map", () => {
     //TODO -- error handling
 })
 
-describe("WadParser - resource data", () => {
+describe("WadReader - resource data", () => {
     const testResourceFilePath = path.join(
         __dirname,
         "testdata",
