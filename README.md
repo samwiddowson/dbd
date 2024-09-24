@@ -6,8 +6,14 @@ Built with Vue/Nuxt3, SQLLite database
 
 ## Road map
 
-CURRENT FOCUS: write tests for resource-wranger-service, including e2e testing
-NEXT PLANNED FOCUS: index resource wads for texture data
+-   CURRENT FOCUS: index resource wads for texture data
+    -   WadReader.getResourceData()
+        -   get string[] for patches
+        -   this will be userful for validating wads later
+    -   new ResourceParser required
+    -   ResourceComparator.addResources()
+    -   ReleasePackager.#indexWadResources() to tie it all together
+-   NEXT PLANNED FOCUS:
 
 ### Resource catalogue site
 
@@ -54,6 +60,15 @@ NEXT PLANNED FOCUS: index resource wads for texture data
     -   Lump ✅
         -   textures ✅
         -   things ✅
+-   Parse map wads for resource data
+    -   textures ✅
+    -   pnames ✅
+    -   MAPINFO
+        -   doomednums => actor names
+    -   actors
+        -   zscript
+        -   decorate
+        -   sprites
 -   Parse uploaded resource files
     -   wad
         -   textures
@@ -73,6 +88,15 @@ NEXT PLANNED FOCUS: index resource wads for texture data
             -   TODO: specifics
         -   TODO: list/consider other resources
     -   store indexed information in database
+-   resource and map validation
+    -   textures referenced in maps which aren't in TEXTUREx
+    -   patches referenced in definitition which aren't in pnames (??or patches subdirectory??)
+    -   WAD specfic format:
+        -   pname patches which don't have a corresponding lump
+        -   patch lumps which aren't in pnames
+    -   doomednums referenced in maps which aren't in MAPINFO
+    -   actor names referenced in MAPINFO which aren't declared in code
+    -   sprites referenced in code which don't exist in resources
 -   Compare map textures to catalogued textures to build a list of requirements
     -   store parsed map resource usage in memory-db ✅
     -   store indexed resource info in memory-db
