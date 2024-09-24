@@ -1,6 +1,7 @@
 import sql from "better-sqlite3"
 import type ParsedMap from "~/server/services/model/ParsedMap"
 import type { SummaryCount } from "~/server/services/model/ParsedMap"
+import type { ParsedResourceData } from "../parsers/wad/interfaces/ResourceData"
 
 export default class ResourceComparator {
     db: sql.Database
@@ -45,5 +46,10 @@ export default class ResourceComparator {
         })
 
         insertMapData()
+    }
+
+    addResources(resourceData: ParsedResourceData) {
+        console.log(resourceData)
+        //TODO: add each item in resourceData to in-memory db
     }
 }

@@ -6,10 +6,12 @@ import MapParser from "./parsers/map/MapParser"
 export default class ReleasePackager {
     resourceComparator: ResourceComparator
     wadParser: WadReader
+    resourceIndexes: string[]
 
-    constructor(wadData: Buffer, resourceIndex: string[]) {
+    constructor(wadData: Buffer, resourceIndexes: string[]) {
         this.resourceComparator = new ResourceComparator()
         this.wadParser = new WadReader(wadData)
+        this.resourceIndexes = resourceIndexes
     }
 
     #indexResourceUsage() {
@@ -28,8 +30,11 @@ export default class ReleasePackager {
     }
 
     #indexWadResources() {
-        //TODO: look for resources included in the provided WAD
-        //  and add them to ResourceComparator (as already included resources)
+        const includedResourceData = this.wadParser.getResourceData()
+        console.log(includedResourceData)
+        //TODO: parse resource data
+        const parsedResourceData = {}
+        this.resourceComparator.addResources(parsedResourceData)
     }
 
     #getAdditionalResourceIndexes() {
@@ -52,7 +57,7 @@ export default class ReleasePackager {
         return Buffer.from("")
     }
 
-    BuildReleasePackage() {
+    BuildAndTrimReleasePackage() {
         this.#indexResourceUsage()
 
         this.#indexWadResources()

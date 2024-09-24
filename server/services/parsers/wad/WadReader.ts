@@ -2,6 +2,7 @@ import log from "~/server/utils/log"
 import type MapData from "../map/strategies/interfaces/MapData"
 import { MapLumps } from "../map/strategies/interfaces/MapData"
 import readWadLumpText from "./readWadLumpText"
+import type { RawResourceData } from "./interfaces/ResourceData"
 
 interface Header {
     identification: string
@@ -67,7 +68,6 @@ export default class WadReader {
             lumpInfo.filepos,
             lumpInfo.size
         )
-        //TODO: check lump data is of expected length and throw error if not
         return lumpData
     }
 
@@ -203,7 +203,7 @@ export default class WadReader {
         return m
     }
 
-    getResourceData() {
+    getResourceData(): RawResourceData {
         const lumpDirectoryIterator = this.#lumpDirectory()
         let texture1Lump: Buffer | undefined
         let texture2Lump: Buffer | undefined
@@ -235,7 +235,7 @@ export default class WadReader {
         ])
 
         return {
-            texturex: texturexLump,
+            textures: texturexLump,
             patches: patchesLump,
         }
     }
