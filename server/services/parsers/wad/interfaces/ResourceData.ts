@@ -1,7 +1,8 @@
 export interface RawResourceData {
     textures?: Buffer
     patches?: Buffer
-    patchNames?: string[]
+    patchLumpsList: string[]
+    flatLumpsList: string[]
 }
 
 export interface ParsedResourceData {

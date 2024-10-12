@@ -71,6 +71,24 @@ export default class WadReader {
         return lumpData
     }
 
+    #getBoundedLumpList(
+        lumpDirectoryIterator: Generator<DirectoryEntry>,
+        endLumpName: string
+    ) {
+        const lumpNames: string[] = []
+        let entry = lumpDirectoryIterator.next()
+        while (entry.value.name !== endLumpName) {
+            lumpNames.push(entry.value.name)
+            entry = lumpDirectoryIterator.next()
+            if (entry.done) {
+                throw new Error(
+                    `Reached end of lump directory while trying to index lumps bounded by ${endLumpName}`
+                )
+            }
+        }
+        return lumpNames
+    }
+
     #getMapData(
         mapLumpInfo: DirectoryEntry,
         lumpDirectoryIterator: Generator<DirectoryEntry>
@@ -208,6 +226,8 @@ export default class WadReader {
         let texture1Lump: Buffer | undefined
         let texture2Lump: Buffer | undefined
         let patchesLump: Buffer | undefined
+        const patchLumpsList: string[] = []
+        const flatLumpsList: string[] = []
         let iteratorResult = lumpDirectoryIterator.next()
         while (!iteratorResult.done) {
             const lump = iteratorResult.value
@@ -225,6 +245,22 @@ export default class WadReader {
                 texture2Lump = this.#getLumpData(lump)
             } else if (lump.name === "PNAMES") {
                 patchesLump = this.#getLumpData(lump)
+            } else if (lump.name === "PP_START") {
+                patchLumpsList.push(
+                    ...this.#getBoundedLumpList(lumpDirectoryIterator, "PP_END")
+                )
+            } else if (lump.name === "P_START") {
+                patchLumpsList.push(
+                    ...this.#getBoundedLumpList(lumpDirectoryIterator, "P_END")
+                )
+            } else if (lump.name === "FF_START") {
+                flatLumpsList.push(
+                    ...this.#getBoundedLumpList(lumpDirectoryIterator, "FF_END")
+                )
+            } else if (lump.name === "F_START") {
+                flatLumpsList.push(
+                    ...this.#getBoundedLumpList(lumpDirectoryIterator, "F_END")
+                )
             }
             iteratorResult = lumpDirectoryIterator.next()
         }
@@ -237,6 +273,8 @@ export default class WadReader {
         return {
             textures: texturexLump,
             patches: patchesLump,
+            patchLumpsList: patchLumpsList,
+            flatLumpsList: flatLumpsList,
         }
     }
 }

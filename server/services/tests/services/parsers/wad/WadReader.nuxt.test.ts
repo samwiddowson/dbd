@@ -95,6 +95,10 @@ describe("WadReader - resource data", () => {
 
         const resourceData = wadReader.getResourceData()
         expect(resourceData.patches?.length).toBe(wadReader.directory[4].size)
-        expect(resourceData.texturex?.length).toBe(wadReader.directory[5].size)
+        expect(resourceData.textures?.length).toBe(wadReader.directory[5].size)
+        const patches = resourceData.patchLumpsList
+        expect(patches.length).toBe(2)
+        expect(patches[0]).toBe("DFPLN05")
+        expect(patches[1]).toBe("OTECHB01")
     })
 })

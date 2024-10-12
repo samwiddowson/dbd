@@ -7,9 +7,6 @@ Built with Vue/Nuxt3, SQLLite database
 ## Road map
 
 -   CURRENT FOCUS: index resource wads for texture data
-    -   WadReader.getResourceData()
-        -   get string[] for patches
-        -   this will be userful for validating wads later
     -   new ResourceParser required
     -   ResourceComparator.addResources()
     -   ReleasePackager.#indexWadResources() to tie it all together
