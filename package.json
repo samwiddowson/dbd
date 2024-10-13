@@ -17,6 +17,7 @@
     "dependencies": {
         "better-sqlite3": "^9.4.3",
         "nuxt": "^3.10.2",
+        "simple-text-parser": "^2.1.1",
         "slugify": "^1.6.6",
         "uuid": "^9.0.1",
         "vue": "^3.4.19",

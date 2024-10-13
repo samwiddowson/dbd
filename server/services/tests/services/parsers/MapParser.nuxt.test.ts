@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, expectTypeOf } from "vitest"
+import { describe, it, expect } from "vitest"
 import MapParser from "~/server/services/parsers/map/MapParser"
 import { MapLumps } from "~/server/services/parsers/map/strategies/interfaces/MapData"
 
