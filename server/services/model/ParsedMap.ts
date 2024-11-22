@@ -5,15 +5,10 @@ export interface SummaryCount {
 }
 
 export default class ParsedMap {
-    name: string
-    format: MapFormat
     doomednumCounts: SummaryCount = {}
     textureCounts: SummaryCount = {}
-    constructor(name: string, format: MapFormat) {
-        this.name = name
-        this.format = format
-    }
-    getMapDataAsString() {
-        return "NOT IMPLEMENTED"
-    }
+    constructor(
+        public name: string,
+        public format: MapFormat
+    ) { }
 }

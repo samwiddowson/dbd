@@ -21,7 +21,7 @@ export default class WadReader {
     header: Header | undefined
     directory: DirectoryEntry[] = []
 
-    #readHeader() {
+    private readHeader() {
         return {
             identification: this.rawData.toString("ascii", 0, 4),
             numlumps: this.rawData.readIntLE(4, 4),
@@ -29,7 +29,7 @@ export default class WadReader {
         }
     }
 
-    *#rawDirectoryReader() {
+    private *rawDirectoryReader() {
         const entryOffset = this.header!.infotableofs
         for (let i = 0; i < this.header!.numlumps; i++) {
             const filePosOffset = entryOffset + i * 16
@@ -45,7 +45,7 @@ export default class WadReader {
         }
     }
 
-    *#lumpDirectory() {
+    private *lumpDirectory() {
         for (let i = 0; i < this.directory!.length; i++) {
             yield this.directory[i]
         }
@@ -53,8 +53,8 @@ export default class WadReader {
 
     constructor(rawData: Buffer) {
         this.rawData = rawData
-        this.header = this.#readHeader()
-        const directoryEntries = this.#rawDirectoryReader()
+        this.header = this.readHeader()
+        const directoryEntries = this.rawDirectoryReader()
         let entry = directoryEntries.next()
         while (!entry.done) {
             this.directory.push(entry.value)
@@ -62,7 +62,7 @@ export default class WadReader {
         }
     }
 
-    #getLumpData(lumpInfo: DirectoryEntry) {
+    private getLumpData(lumpInfo: DirectoryEntry) {
         const lumpData = Buffer.from(
             this.rawData.buffer,
             lumpInfo.filepos,
@@ -71,7 +71,7 @@ export default class WadReader {
         return lumpData
     }
 
-    #getBoundedLumpList(
+    private getBoundedLumpList(
         lumpDirectoryIterator: Generator<DirectoryEntry>,
         endLumpName: string
     ) {
@@ -112,7 +112,7 @@ export default class WadReader {
                 thingsEntry
             )
 
-            const thingsLump = this.#getLumpData(thingsEntry)
+            const thingsLump = this.getLumpData(thingsEntry)
 
             lumpDirectoryIterator.next() // LINEDEFS
 
@@ -132,7 +132,7 @@ export default class WadReader {
                 "processing sidedefs lump from directory info:",
                 sidedefsEntry
             )
-            const sidedefsLump = this.#getLumpData(sidedefsEntry)
+            const sidedefsLump = this.getLumpData(sidedefsEntry)
 
             lumpDirectoryIterator.next() // VERTEXES
             lumpDirectoryIterator.next() // SEGS
@@ -154,7 +154,7 @@ export default class WadReader {
                 "processing sectors lump from directory info:",
                 sectorsEntry
             )
-            const sectorsLump = this.#getLumpData(sectorsEntry)
+            const sectorsLump = this.getLumpData(sectorsEntry)
             return {
                 name: mapName,
                 data: new MapLumps(thingsLump, sidedefsLump, sectorsLump),
@@ -198,7 +198,7 @@ export default class WadReader {
         //   * create a MapData object and append it to a MapData[] array
         //
         const m: MapData[] = []
-        const lumpDirectoryIterator = this.#lumpDirectory()
+        const lumpDirectoryIterator = this.lumpDirectory()
         let iteratorResult = lumpDirectoryIterator.next()
         while (!iteratorResult.done) {
             const lump = iteratorResult.value
@@ -222,7 +222,7 @@ export default class WadReader {
     }
 
     getResourceData(): RawResourceData {
-        const lumpDirectoryIterator = this.#lumpDirectory()
+        const lumpDirectoryIterator = this.lumpDirectory()
         let texture1Lump: Buffer | undefined
         let texture2Lump: Buffer | undefined
         let patchesLump: Buffer | undefined
@@ -237,29 +237,29 @@ export default class WadReader {
                 if (texture1Lump) {
                     throw new Error("Multiple lumps found with name TEXTURE1")
                 }
-                texture1Lump = this.#getLumpData(lump)
+                texture1Lump = this.getLumpData(lump)
             } else if (lump.name === "TEXTURE2") {
                 if (texture2Lump) {
                     throw new Error("Multiple lumps found with name TEXTURE2")
                 }
-                texture2Lump = this.#getLumpData(lump)
+                texture2Lump = this.getLumpData(lump)
             } else if (lump.name === "PNAMES") {
-                patchesLump = this.#getLumpData(lump)
+                patchesLump = this.getLumpData(lump)
             } else if (lump.name === "PP_START") {
                 patchLumpsList.push(
-                    ...this.#getBoundedLumpList(lumpDirectoryIterator, "PP_END")
+                    ...this.getBoundedLumpList(lumpDirectoryIterator, "PP_END")
                 )
             } else if (lump.name === "P_START") {
                 patchLumpsList.push(
-                    ...this.#getBoundedLumpList(lumpDirectoryIterator, "P_END")
+                    ...this.getBoundedLumpList(lumpDirectoryIterator, "P_END")
                 )
             } else if (lump.name === "FF_START") {
                 flatLumpsList.push(
-                    ...this.#getBoundedLumpList(lumpDirectoryIterator, "FF_END")
+                    ...this.getBoundedLumpList(lumpDirectoryIterator, "FF_END")
                 )
             } else if (lump.name === "F_START") {
                 flatLumpsList.push(
-                    ...this.#getBoundedLumpList(lumpDirectoryIterator, "F_END")
+                    ...this.getBoundedLumpList(lumpDirectoryIterator, "F_END")
                 )
             }
             iteratorResult = lumpDirectoryIterator.next()

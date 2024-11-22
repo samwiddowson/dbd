@@ -14,7 +14,7 @@ export default class ReleasePackager {
         this.resourceIndexes = resourceIndexes
     }
 
-    #indexResourceUsage() {
+    private indexResourceUsage() {
         const mapData = this.wadParser.getMapData()
 
         const parsedMaps: ParsedMap[] = []
@@ -29,24 +29,25 @@ export default class ReleasePackager {
         }
     }
 
-    #indexWadResources() {
+    private indexWadResources() {
         const includedResourceData = this.wadParser.getResourceData()
         console.log(includedResourceData)
+
         //TODO: parse resource data
         const parsedResourceData = {}
         this.resourceComparator.addResources(parsedResourceData)
     }
 
-    #getAdditionalResourceIndexes() {
+    private getAdditionalResourceIndexes() {
         //TODO: get used resource pack data from main db using resource index
         //TODO: store resource pack data in ResourceComparator
     }
 
-    #buildRequiredResourceIndex() {
-        //TODO: ask resoucecomparator which resources are actually used -- get a list of what is actually required
+    private buildRequiredResourceIndex() {
+        //TODO: ask resourcecomparator which resources are actually used -- get a list of what is actually required
     }
 
-    #packageRelease() {
+    private packageRelease() {
         //TODO: essentially make a new resource file
         //  WAD or PK3 as specified
         //INCLUDE:
@@ -58,14 +59,14 @@ export default class ReleasePackager {
     }
 
     BuildAndTrimReleasePackage() {
-        this.#indexResourceUsage()
+        this.indexResourceUsage()
 
-        this.#indexWadResources()
+        this.indexWadResources()
 
-        this.#getAdditionalResourceIndexes()
+        this.getAdditionalResourceIndexes()
 
-        this.#buildRequiredResourceIndex()
+        this.buildRequiredResourceIndex()
 
-        return this.#packageRelease()
+        return this.packageRelease()
     }
 }
