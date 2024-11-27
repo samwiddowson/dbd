@@ -2,20 +2,21 @@ import ResourceComparator from "~/server/services/comparator/ResourceComparator"
 import WadReader from "./parsers/wad/WadReader"
 import type ParsedMap from "./model/ParsedMap"
 import MapParser from "./parsers/map/MapParser"
+import ResourceParser from "./parsers/resource/ResourceParser"
 
 export default class ReleasePackager {
     resourceComparator: ResourceComparator
-    wadParser: WadReader
+    wadReader: WadReader
     resourceIndexes: string[]
 
     constructor(wadData: Buffer, resourceIndexes: string[]) {
         this.resourceComparator = new ResourceComparator()
-        this.wadParser = new WadReader(wadData)
+        this.wadReader = new WadReader(wadData)
         this.resourceIndexes = resourceIndexes
     }
 
     private indexResourceUsage() {
-        const mapData = this.wadParser.getMapData()
+        const mapData = this.wadReader.getMapData()
 
         const parsedMaps: ParsedMap[] = []
 
@@ -30,11 +31,12 @@ export default class ReleasePackager {
     }
 
     private indexWadResources() {
-        const includedResourceData = this.wadParser.getResourceData()
+        const includedResourceData = this.wadReader.getResourceData()
         console.log(includedResourceData)
 
-        //TODO: parse resource data
-        const parsedResourceData = {}
+        const resourceParser = new ResourceParser(includedResourceData)
+
+        const parsedResourceData = resourceParser.parse()
         this.resourceComparator.addResources(parsedResourceData)
     }
 
