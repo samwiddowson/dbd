@@ -1,7 +1,7 @@
 import sql from "better-sqlite3"
 import type ParsedMap from "~/server/services/model/ParsedMap"
 import type { SummaryCount } from "~/server/services/model/ParsedMap"
-import type { ParsedResourceData } from "../parsers/wad/interfaces/ResourceData"
+import type { ParsedResourceData } from "../model/ParsedResourceData"
 
 export default class ResourceComparator {
     db: sql.Database
@@ -18,6 +18,8 @@ export default class ResourceComparator {
                 `CREATE TABLE doomednum_counts (doomednum, map_name, count)`
             )
             .run()
+        this.db.prepare(`create table textures (texture_name)`).run()
+        this.db.prepare(`create table pnames (patch_name)`).run()
     }
 
     addMap(map: ParsedMap) {
@@ -50,6 +52,31 @@ export default class ResourceComparator {
 
     addResources(resourceData: ParsedResourceData) {
         console.log(resourceData)
+
+        if (resourceData.textures) {
+            for (const textureName of resourceData.textures) {
+                this.db
+                    .prepare(
+                        `
+                                INSERT INTO textures
+                                (texture_name)
+                                VALUES (@textureName)`
+                    )
+                    .run({ textureName })
+            }
+        }
+
+        if (resourceData.patchNames) {
+            for (const patchName of resourceData.patchNames) {
+                this.db
+                    .prepare(
+                        `INSERT INTO pnames
+                                (patch_name)
+                                VALUES (@patchName)`
+                    )
+                    .run({ patchName })
+            }
+        }
         //TODO: add each item in resourceData to in-memory db
     }
 }
