@@ -7,7 +7,8 @@ Built with Vue/Nuxt3, SQLLite database
 ## Road map
 
 -   CURRENT FOCUS: index resource wads for texture data
-    -   new ResourceParser required
+    -   working on new ResourceParser
+        -   TextureBlockParser currently failing
     -   ResourceComparator.addResources()
     -   ReleasePackager.#indexWadResources() to tie it all together
 -   NEXT PLANNED FOCUS:

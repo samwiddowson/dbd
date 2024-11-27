@@ -4,9 +4,3 @@ export interface RawResourceData {
     patchLumpsList: string[]
     flatLumpsList: string[]
 }
-
-export interface ParsedResourceData {
-    textures?: string[]
-    patches?: Buffer[]
-    patchNames?: string[]
-}

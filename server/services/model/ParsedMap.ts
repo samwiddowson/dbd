@@ -10,5 +10,5 @@ export default class ParsedMap {
     constructor(
         public name: string,
         public format: MapFormat
-    ) { }
+    ) {}
 }

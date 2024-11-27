@@ -5,22 +5,20 @@ import type ParsedMap from "~/server/services/model/ParsedMap"
 import { BinaryMapParser } from "~/server/services/parsers/map/strategies/BinaryMapParser"
 import { UdmfMapParser } from "~/server/services/parsers/map/strategies/UdmfMapParser"
 
-function determineStrategy(mapData: MapData) {
-    if (mapData.data instanceof MapLumps) {
-        return new BinaryMapParser(mapData)
-    } else {
-        return new UdmfMapParser(mapData)
-    }
-}
-
 export default class MapParser {
-    mapData: MapData
     strategy: BinaryMapParser | UdmfMapParser
     parseMap: () => ParsedMap
 
-    constructor(mapData: MapData) {
-        this.mapData = mapData
-        this.strategy = determineStrategy(mapData)
+    private determineStrategy() {
+        if (this.mapData.data instanceof MapLumps) {
+            return new BinaryMapParser(this.mapData)
+        } else {
+            return new UdmfMapParser(this.mapData)
+        }
+    }
+
+    constructor(private mapData: MapData) {
+        this.strategy = this.determineStrategy()
 
         this.parseMap = this.strategy.parseMap
     }
