@@ -225,6 +225,8 @@ export default class WadReader {
         const lumpDirectoryIterator = this.lumpDirectory()
         let texture1Lump: Buffer | undefined
         let texture2Lump: Buffer | undefined
+        let animatedLump: Buffer | undefined
+        let animdefsLump: Buffer | undefined
         let patchesLump: Buffer | undefined
         const patchLumpsList: string[] = []
         const flatLumpsList: string[] = []
@@ -243,6 +245,10 @@ export default class WadReader {
                     throw new Error("Multiple lumps found with name TEXTURE2")
                 }
                 texture2Lump = this.getLumpData(lump)
+            } else if (lump.name === "ANIMDEFS") {
+                animdefsLump = this.getLumpData(lump)
+            } else if (lump.name === "ANIMATED") {
+                animatedLump = this.getLumpData(lump)
             } else if (lump.name === "PNAMES") {
                 patchesLump = this.getLumpData(lump)
             } else if (lump.name === "PP_START") {
@@ -265,13 +271,17 @@ export default class WadReader {
             iteratorResult = lumpDirectoryIterator.next()
         }
 
-        const texturexLump = Buffer.concat([
-            texture1Lump ?? new Uint8Array(),
-            texture2Lump ?? new Uint8Array(),
-        ])
+        const texturexLump =
+            (texture1Lump || texture2Lump) &&
+            Buffer.concat([
+                texture1Lump ?? new Uint8Array(),
+                texture2Lump ?? new Uint8Array(),
+            ])
 
         return {
             textures: texturexLump,
+            animated: animatedLump,
+            animdefs: animdefsLump,
             patches: patchesLump,
             patchLumpsList: patchLumpsList,
             flatLumpsList: flatLumpsList,

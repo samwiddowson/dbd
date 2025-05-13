@@ -7,9 +7,9 @@ Built with Vue/Nuxt3, SQLLite database
 ## Road map
 
 -   CURRENT FOCUS: reading and parsing animation info
-    -   ANIMDEFS binary lump (current wad)
+    -   ANIMATED binary lump (current wad)
         -   including reading the resource index to find textures between start and end
-    -   AMIMATED text lump
+    -   ANIMDEFS text lump
     -   store in resourceComparator as unique animation_group
 -   NEXT PLANNED FOCUS:
     -   using resourceComparator to determine which textures from the resources are NOT referenced in the map (including those associated by animation)
