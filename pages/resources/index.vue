@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data, pending, error, _refresh } = await useFetch("/api/resources", {
+const { data, pending, error } = await useFetch("/api/resources", {
     lazy: true,
 })
 </script>
@@ -20,7 +20,7 @@ const { data, pending, error, _refresh } = await useFetch("/api/resources", {
                 <p>Loading...</p>
             </div>
             <ul
-                v-else-if="data?.length > 0"
+                v-else-if="data?.length ?? 0 > 0"
                 class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
             >
                 <li v-for="resource in data" :key="resource.id">

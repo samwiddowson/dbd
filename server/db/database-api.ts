@@ -1,10 +1,13 @@
 import sql from "better-sqlite3"
 import log from "~/server/utils/log.js"
 import { v4 as uuidv4 } from "uuid"
+import type { ResourceDataDto } from "../dto/resourceDataDto"
+import type { Creator } from "./model/creator"
+import type { Resource } from "./model/resource"
 
 const db = sql("resources.db")
 
-export function saveResourceInfo(info) {
+export function saveResourceInfo(info: Resource) {
     log.trace("saveResourceInfo called with ResourceInfo:", info)
     log.info("RUNNING INSERT")
 
@@ -60,7 +63,7 @@ export function getAllResources() {
             `
             )
             .all()
-        return data
+        return data as ResourceDataDto[]
     } catch (err) {
         log.error(
             "An error was encountered while trying to SELECT all resources from the database:",
@@ -69,7 +72,7 @@ export function getAllResources() {
     }
 }
 
-export function saveCreatorInfo(info) {
+export function saveCreatorInfo(info: Creator) {
     const data = {
         id: uuidv4(),
         ...info,
@@ -102,7 +105,7 @@ export function getAllCreators() {
             `
             )
             .all()
-        return data
+        return data as CreatorDto[]
     } catch (err) {
         log.error(
             "An error was encountered while trying to SELECT all creators from the database:",

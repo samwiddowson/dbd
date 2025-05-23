@@ -16,6 +16,7 @@ export default defineNuxtConfig({
 
     css: ["~/assets/css/main.css"],
 
+    eslint: {},
     vite: {
         plugins: [tailwindcss()],
     },
@@ -31,5 +32,5 @@ export default defineNuxtConfig({
         loggingLevel: "TRACE",
     },
 
-    compatibilityDate: "2025-05-13",
+    compatibilityDate: "2025-05-23",
 })

@@ -1,7 +1,8 @@
-import { getResources } from "~/server/services/resource-service"
+import { resourceService } from "../services"
 import log from "~/server/utils/log"
 
 export default defineEventHandler(() => {
     log.trace("GET resources")
-    return getResources()
+
+    return resourceService.getResources()
 })
